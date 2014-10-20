@@ -6,11 +6,12 @@ https://github.com/docker/docker/blob/bc684fae642dbf585215b9518f469634a52a5524/d
 [root@centos Desktop]# ls /var/lib/docker/
 containers  devicemapper  execdriver  graph  init  linkgraph.db  repositories-devicemapper  volumes
 </code></pre>
-1.1 元数据目录
-containers中存放了容器的配置信息。
-devicemapper中存放的容器的dm信息
-graph中存放的镜像的树形关系信息。
-repository-devicemmapper中存放了镜像的dm信息。
+
+1.1 元数据目录  
+containers中存放了容器的配置信息。  
+devicemapper中存放的容器的dm信息。    
+graph中存放的镜像的树形关系信息。  
+repository-devicemmapper中存放了镜像的dm信息。  
 
 
 2. docker使用的存储(LVM后端为例）
