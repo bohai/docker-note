@@ -76,7 +76,7 @@ none on /proc/sys/fs/binfmt_misc type binfmt_misc (rw)
 sunrpc on /var/lib/nfs/rpc_pipefs type rpc_pipefs (rw)
 186.100.8.172:/home/zhang on /nfs type nfs (rw,vers=4,addr=186.100.8.172,clientaddr=186.100.8.138)
 </code></pre>
-5. 使用共享块设备  
+5. 使用共享块设备(注意必须加--privileged=true,否则权限不够，无法在容器中mount传入的设备）  
 <pre><code>
 [root@centoo65 ~]# losetup -a
 /dev/loop0: [0801]:6291985 (/dev/loop0)
