@@ -76,3 +76,22 @@ none on /proc/sys/fs/binfmt_misc type binfmt_misc (rw)
 sunrpc on /var/lib/nfs/rpc_pipefs type rpc_pipefs (rw)
 186.100.8.172:/home/zhang on /nfs type nfs (rw,vers=4,addr=186.100.8.172,clientaddr=186.100.8.138)
 </code></pre>
+5. 使用共享块设备  
+<pre><code>
+[root@centoo65 ~]# losetup -a
+/dev/loop0: [0801]:6291985 (/dev/loop0)
+/dev/loop1: [0801]:6291986 (/dev/loop1)
+/dev/loop3: [0803]:16 (/data/floppy.img)
+/dev/loop4: [0803]:19 (/data/metadata.img)
+[root@centoo65 data]# docker run -i -t --privileged=true -v /dev/loop3:/dev/sdb centos:latest /bin/bash
+bash-4.2# mount /dev/sdb /mnt/
+bash-4.2# ls -l /mnt/
+total 16
+drwx------ 2 root root 16384 Oct 20 07:48 lost+found
+bash-4.2# touch /mnt/test.txt
+[root@centoo65 ~]# mount /dev/loop3  /mnt/
+[root@centoo65 ~]# ls -l /mnt/
+total 16
+drwx------ 2 root root 16384 Oct 20 02:48 lost+found
+-rw-r--r-- 1 root root     0 Oct 20 02:49 test.txt
+</code></pre>
