@@ -57,3 +57,22 @@ sr0                                   11:0    1  1024M  0 rom
 /dev/loop5: [fd02]:16 (/home/metadata2.img)
 /dev/loop6: [fd02]:17 (/home/data2.img)
 </code></pre>
+4. 使用NFS共享存储给容器
+<pre><code>
+[root@centoo65 data]# docker run -i -t -v /nfs/boh/:/nfs/boh/ centos:latest /bin/bash
+bash-4.2# ls /nfs/boh/
+a.txt
+bash-4.2# touch /nfs/boh/b.txt
+[root@centoo65 ~]# ls /nfs/boh/
+a.txt  b.txt
+[root@centoo65 ~]# mount
+/dev/sda1 on / type ext4 (rw)
+proc on /proc type proc (rw)
+sysfs on /sys type sysfs (rw)
+devpts on /dev/pts type devpts (rw,gid=5,mode=620)
+tmpfs on /dev/shm type tmpfs (rw)
+/dev/sda3 on /data type ext4 (rw)
+none on /proc/sys/fs/binfmt_misc type binfmt_misc (rw)
+sunrpc on /var/lib/nfs/rpc_pipefs type rpc_pipefs (rw)
+186.100.8.172:/home/zhang on /nfs type nfs (rw,vers=4,addr=186.100.8.172,clientaddr=186.100.8.138)
+</code></pre>
