@@ -9,5 +9,6 @@ chkconfig docker on
 
 #etcd  
 http://mirrors.aliyun.com/fedora/updates/20/SRPMS/etcd-0.4.6-6.fc20.src.rpm  
+直接使用etcd的RPM包即可。
 
 
