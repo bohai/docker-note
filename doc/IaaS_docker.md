@@ -1,4 +1,4 @@
-### IaaS进入容器服务进入2.0时代 
+### 公有云容器服务进入2.0时代 
 近来Google、Amazon接连发布基于容器（其实主要是Docker)的新业务。  
 2014.11.05  Google发布Google Container engine  
 2014.11.13  Amazon发布AWS Container Service  
