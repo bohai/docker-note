@@ -17,5 +17,5 @@
 ##### nova-docker的功能情况
 1. 支持创建，删除，reboot，log查看，软重启，pause，unpause
 2. 支持创建快照（但是快照创建失败。docker images可以看到创建的镜像残留，但是glance上没有）
-3. 支持挂载浮动IP。
+3. 支持挂载浮动IP。   
 未完...待续
