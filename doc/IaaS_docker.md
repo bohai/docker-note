@@ -17,7 +17,6 @@
 目前国内厂商刚刚开始1.0的支持。
 
 ### Amazon与Google容器方案对比  
-##### 对象对比  
 ###### 集群管理    
 Google的Cluster有一组虚拟机组成，其中包含了一个master节点和多个node节点。Google选择了自己主导的kubernetes作为集群管理工具。Google提供了Replication Controller确保业务的多个实例的同时运行。用于提高业务的可靠性。     
 Amazon的Cluster也是由一组虚拟机（在一个region，可以在多个AZ中）组成。每个集群可以创建一个scheduler，负责容器在集群中的管理。
@@ -29,6 +28,8 @@ Amazon提供了ECS-Enabled AMI（其中包含了agent软件）供用户使用。
 Google没有类似的暴露，而是直接帮助用户建立一个kubernetes CLuster。  
 ###### 特别的 
 Google还提供给了Service的概念。因为Pods都是临时的，随时可能失效。Service用来完成对Pods的路由，避免Pods消失带来的业务不可访问。  
+###### 镜像仓库
+两者并未提供自己的Docker镜像仓库（可能国外网络条件比较好），都是使用外部docker hub或者第三方仓库。  
 ###### 使用过程
 + Amazon  
 1. 创建Cluster  
