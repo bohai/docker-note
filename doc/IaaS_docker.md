@@ -2,6 +2,7 @@
 进来Google、Amazon接连发布基于容器（其实主要是Docker)的新业务
 + 2014.11.05  Google发布Google Container engine  
 + 2014.11.13  Amazon发布AWS Container Service  
+
 相比于之前简单与虚拟机集成的方式，这些新服务对Docker的支持进一步加强。  
 用户真正可以方便的对容器的方式进行业务管理，虚拟机仅仅作为容器集群资源的提供者。
 
