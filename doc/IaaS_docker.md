@@ -1,4 +1,4 @@
-### IaaS进一步支持Container  
+### IaaS进一步支持Container Service2.0 
 + 2014.11.13  Amazon发布AWS Container Service  
 + 2014.11.05  Google发布Google Container engine  
 
