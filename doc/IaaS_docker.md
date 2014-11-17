@@ -1,11 +1,18 @@
 ### IaaS进入Container Service2.0 
-进来Google、Amazon接连发布基于容器（其实主要是Docker)的新业务。
+近来Google、Amazon接连发布基于容器（其实主要是Docker)的新业务。
 + 2014.11.05  Google发布Google Container engine  
 + 2014.11.13  Amazon发布AWS Container Service  
 
 相比于之前简单与虚拟机集成的方式，这些新服务对Docker的支持进一步加强。  
 用户真正可以方便的对容器的方式进行业务管理，虚拟机仅仅作为容器集群资源的提供者。
 接下来，我们可以等待Azure的新容器服务发布了。
+
+如果我们把之前IaaS公有云提供商的产品看做conrtainer service1.0, 这轮新发布的产品
+无疑是升级版的2.0。  
+
+在1.0中，各厂商引入API、CLI方式向用户提供在虚拟机中创建容器的简单能力。
+在2.0中，各厂商引入容器集群、业务（一组容器，Task/Pods）的概念。对基于容器开发的用户来说，似乎在淡化虚拟机存在。
+用户完全以容器的方式进行管理和业务发放。在资源不足时，才需要往容器集群中增加新的节点（虚拟机）。  
 
 ### 分析AWS Container Service  
 AWS首款结合着Docker技术提供的云计算平台，让用户可以通过AWS云平台快速实现Dockers部署、 管理和扩展。  
