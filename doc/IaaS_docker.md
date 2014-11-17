@@ -32,13 +32,13 @@ Google还提供给了Service的概念。因为Pods都是临时的，随时可能
 两者并未提供自己的Docker镜像仓库（可能国外网络条件比较好），都是使用外部docker hub或者第三方仓库。  
 ###### 使用过程
 + Amazon  
-1. 创建Cluster  
-2. 创建Task define，并注册到Cluster中  
-3. 创建虚拟机，并注册到CLuster中  
-4. 根据Task define创建若干个Task实例  
-5. 提供服务。然后监控cluster情况，进行Cluseter中虚拟机的增减  
+  1. 创建Cluster  
+  2. 创建Task define，并注册到Cluster中  
+  3. 创建虚拟机，并注册到CLuster中  
+  4. 根据Task define创建若干个Task实例  
+  5. 提供服务。然后监控cluster情况，进行Cluseter中虚拟机的增减  
 + Google   
-1. 创建Cluster
-2. 创建Pods
-3. 配置外网通信的firewall
+  1. 创建Cluster
+  2. 创建Pods
+  3. 配置外网通信的firewall
 
