@@ -8,10 +8,12 @@
 <pre><core>docker save tutum/wordpress | glance image-create --is-public=True --container-format=docker --disk-format=raw --name tutum/wordpress
 </code></pre>
 5. 重启nova-compute/glance-api  
+
 ##### 碰到的坑  
 1. /run/docker.sock要设置为stack用户可以访问，nova.conf中设置host_url为/run/docker.sock。
 2. 需要使用tutum/wordpress这种设置了内部服务的docker镜像。否则会创建容器失败。我尝试了在image参数中增加命令行命令，当时没有成功。
 3. docker.inspect_image在很多时候会抛出API error。感觉是代码错误，需要进一步确认。
+
 ##### nova-docker的功能情况
 1. 支持创建，删除，reboot，log查看，软重启，pause，unpause
 2. 支持创建快照（但是快照创建失败。docker images可以看到创建的镜像残留，但是glance上没有）
