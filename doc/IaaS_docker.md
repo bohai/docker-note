@@ -30,13 +30,13 @@ Google没有类似的暴露，而是直接帮助用户建立一个kubernetes CLu
 特别的：
 Google还提供给了Service的概念。因为Pods都是临时的，随时可能失效。Service用来完成对Pods的路由，避免Pods消失带来的业务不可访问。  
 ###### 使用过程
-+ Amazon
++ Amazon  
 1. 创建Cluster  
 2. 创建Task define，并注册到Cluster中  
 3. 创建虚拟机，并注册到CLuster中  
 4. 根据Task define创建若干个Task实例  
 5. 提供服务。然后监控cluster情况，进行Cluseter中虚拟机的增减  
-+ Google
++ Google   
 1. 创建Cluster
 2. 创建Pods
 3. 配置外网通信的firewall
