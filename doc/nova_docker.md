@@ -19,5 +19,5 @@ nova-docker插件h版出现，但是在i版本从nova中移出，作为孵化项
 
 
 参考：  
-1. http://www.opencontrail.org/openstack-docker-opencontrail/
-2. http://technodrone.blogspot.com/2014/10/nova-docker-on-juno.html  
+1. http://www.opencontrail.org/openstack-docker-opencontrail/   
+2. http://technodrone.blogspot.com/2014/10/nova-docker-on-juno.html    
