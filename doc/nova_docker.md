@@ -29,7 +29,7 @@ nova-docker插件h版出现，但是在i版本从nova中移出，作为孵化项
 容器使用的是本地存储，不能使用cinder共享存储。
 
 ### 网络实现       
-
+//如何创建容器网络。
 
 参考：  
 1. http://www.opencontrail.org/openstack-docker-opencontrail/   
