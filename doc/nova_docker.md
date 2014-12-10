@@ -21,7 +21,7 @@ nova-docker插件h版出现，但是在i版本从nova中移出，作为孵化项
 查询docker容器。  
 查询容器console输出。  
 支持neutron网络/nova-network网络。  
-支持绑定浮动IP。(似乎存在问题？？？）  
+支持绑定浮动IP。  
 
 不支持共享存储。  
 不支持挂卷/卸卷操作。  
