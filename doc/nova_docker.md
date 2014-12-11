@@ -69,7 +69,7 @@ NIC statistics:
        valid_lft forever preferred_lft forever
 ...
 </code></pre>
-查看设备29关联设备：
+查看设备29关联设备：(设备挂在OVS网桥的br-int上）
 <pre><code>[root@localhost ~]# ovs-vsctl show
 2368aead-599b-4cd8-b2a1-dd01041e5635
     Bridge br-ex
@@ -119,6 +119,45 @@ NIC statistics:
                 type: internal
     ovs_version: "2.0.0"
 </code></pre>
+备注：因为是个单机环境，没有给br-int配置具体的物理网卡。  
+容器DHCP服务与绑定Floating IP:   
+<Pre><code> //10.0.0.0/24网段的DHCP服务
+[root@localhost ~]# ip netns exec qdhcp-78277811-dc20-47c0-8319-58894843e3d4 ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+27: tapeb9206a8-85: <BROADCAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN
+    link/ether fa:16:3e:6e:1b:13 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.0.3/24 brd 10.0.0.255 scope global tapeb9206a8-85
+       valid_lft forever preferred_lft forever
+    inet6 fe80::f816:3eff:fe6e:1b13/64 scope link
+       valid_lft forever preferred_lft forever
+//可以看出通过router将内部10.0.0.0/24的网络与外部172.24.4.0/24的两个IP打通
+[root@localhost ~]# ip netns exec qrouter-818c4149-355d-4409-8dda-f412da898ff0  ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+19: qr-9712c2ca-1f: <BROADCAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN
+    link/ether fa:16:3e:50:18:19 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.0.1/24 brd 10.0.0.255 scope global qr-9712c2ca-1f
+       valid_lft forever preferred_lft forever
+    inet6 fe80::f816:3eff:fe50:1819/64 scope link
+       valid_lft forever preferred_lft forever
+20: qg-83cd012e-53: <BROADCAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN
+    link/ether fa:16:3e:0d:4e:c2 brd ff:ff:ff:ff:ff:ff
+    inet 172.24.4.2/24 brd 172.24.4.255 scope global qg-83cd012e-53
+       valid_lft forever preferred_lft forever
+    inet 172.24.4.6/32 brd 172.24.4.6 scope global qg-83cd012e-53
+       valid_lft forever preferred_lft forever
+    inet6 fe80::f816:3eff:fe0d:4ec2/64 scope link
+       valid_lft forever preferred_lft forever
+</ocde></pre>
 
 参考：  
 1. http://www.opencontrail.org/openstack-docker-opencontrail/   
