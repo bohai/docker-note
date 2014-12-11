@@ -59,6 +59,70 @@ qrouter-818c4149-355d-4409-8dda-f412da898ff0
     inet6 fe80::f816:3eff:fed8:9be8/64 scope link
        valid_lft forever preferred_lft forever
 </code></pre>
+查看设备28的关联veth pair：
+<pre><code>
+[root@localhost ~]# ip netns exec 54ba6c67de05b8c5ddb824497eae0071f902dcdea05ce93109d9791453dfeb17  ethtool -S nse54c9783-26
+NIC statistics:
+     peer_ifindex: 29
+[root@localhost ~]# ip addr
+...
+29: tape54c9783-26: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast master ovs-system state UP qlen 1000
+    link/ether 82:31:7f:dc:e3:8f brd ff:ff:ff:ff:ff:ff
+    inet6 fe80::8031:7fff:fedc:e38f/64 scope link
+       valid_lft forever preferred_lft forever
+...
+</code></pre>
+查看设备29关联设备：
+<pre><code>
+[root@localhost ~]# ovs-vsctl show
+2368aead-599b-4cd8-b2a1-dd01041e5635
+    Bridge br-ex
+        Port br-ex
+            Interface br-ex
+                type: internal
+        Port "qg-83cd012e-53"
+            Interface "qg-83cd012e-53"
+                type: internal
+    Bridge br-int
+        fail_mode: secure
+        Port "tapbf138559-94"
+            tag: 3
+            Interface "tapbf138559-94"
+        Port "tape54c9783-26"
+            tag: 1
+            Interface "tape54c9783-26"
+        Port "tap7687fcec-f0"
+            tag: 2
+            Interface "tap7687fcec-f0"
+        Port br-int
+            Interface br-int
+                type: internal
+        Port "qr-9712c2ca-1f"
+            tag: 1
+            Interface "qr-9712c2ca-1f"
+                type: internal
+        Port patch-tun
+            Interface patch-tun
+                type: patch
+                options: {peer=patch-int}
+        Port "tap5f8409aa-f9"
+            tag: 3
+            Interface "tap5f8409aa-f9"
+                type: internal
+        Port "tapeb9206a8-85"
+            tag: 1
+            Interface "tapeb9206a8-85"
+                type: internal
+    Bridge br-tun
+        Port patch-int
+            Interface patch-int
+                type: patch
+                options: {peer=patch-tun}
+        Port br-tun
+            Interface br-tun
+                type: internal
+    ovs_version: "2.0.0"
+</code></pre>
 
 参考：  
 1. http://www.opencontrail.org/openstack-docker-opencontrail/   
