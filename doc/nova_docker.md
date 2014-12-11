@@ -30,7 +30,35 @@ nova-docker插件h版出现，但是在i版本从nova中移出，作为孵化项
 容器使用的是本地存储，不能使用cinder共享存储。
 
 ### 网络实现       
-//如何创建容器网络。
+查看容器的namespace:  
+<pre><code>
+[root@localhost ~]# docker ps --no-trunc
+CONTAINER ID                                                       IMAGE                    COMMAND             CREATED             STATUS              PORTS               NAMES
+54ba6c67de05b8c5ddb824497eae0071f902dcdea05ce93109d9791453dfeb17   tutum/wordpress:latest   "/run.sh"           15 hours ago        Up 15 hours                             nova-ee2edd99-a64c-4701-84ad-faccd3b1a246
+[root@localhost ~]# ip netns list
+54ba6c67de05b8c5ddb824497eae0071f902dcdea05ce93109d9791453dfeb17
+qdhcp-78277811-dc20-47c0-8319-58894843e3d4
+3ce4e73bcfeb64b994a5bf87c7f49553ca3583308b93878a07679a742661b0a4
+qdhcp-bc557a68-425e-4f24-bb6c-627500647856
+ee3b2cc56a0ccae387371cf8eb6ad7f43712cf1cbdc66bf46af77f3c929be34a
+qrouter-818c4149-355d-4409-8dda-f412da898ff0
+</code></pre>
+查看namespace中网络：  
+<pre><code>
+[root@localhost ~]# ip netns exec 54ba6c67de05b8c5ddb824497eae0071f902dcdea05ce93109d9791453dfeb17 ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+28: nse54c9783-26: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 1000
+    link/ether fa:16:3e:d8:9b:e8 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.0.2/24 brd 10.0.0.255 scope global nse54c9783-26
+       valid_lft forever preferred_lft forever
+    inet6 fe80::f816:3eff:fed8:9be8/64 scope link
+       valid_lft forever preferred_lft forever
+</code></pre>
 
 参考：  
 1. http://www.opencontrail.org/openstack-docker-opencontrail/   
