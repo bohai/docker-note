@@ -157,6 +157,10 @@ NIC statistics:
        valid_lft forever preferred_lft forever
     inet6 fe80::f816:3eff:fe0d:4ec2/64 scope link
        valid_lft forever preferred_lft forever
+//IP绑定的NAT规则
+[root@localhost ~]# ip netns exec qrouter-818c4149-355d-4409-8dda-f412da898ff0  iptables-save
+-A neutron-l3-agent-PREROUTING -d 172.24.4.6/32 -j DNAT --to-destination 10.0.0.2
+-A neutron-l3-agent-float-snat -s 10.0.0.2/32 -j SNAT --to-source 172.24.4.6
 </ocde></pre>
 
 参考：  
