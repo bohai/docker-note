@@ -31,8 +31,7 @@ nova-docker插件h版出现，但是在i版本从nova中移出，作为孵化项
 
 ### 网络实现       
 查看容器的namespace:  
-<pre><code>
-[root@localhost ~]# docker ps --no-trunc
+<pre><code>[root@localhost ~]# docker ps --no-trunc
 CONTAINER ID                                                       IMAGE                    COMMAND             CREATED             STATUS              PORTS               NAMES
 54ba6c67de05b8c5ddb824497eae0071f902dcdea05ce93109d9791453dfeb17   tutum/wordpress:latest   "/run.sh"           15 hours ago        Up 15 hours                             nova-ee2edd99-a64c-4701-84ad-faccd3b1a246
 [root@localhost ~]# ip netns list
@@ -44,8 +43,7 @@ ee3b2cc56a0ccae387371cf8eb6ad7f43712cf1cbdc66bf46af77f3c929be34a
 qrouter-818c4149-355d-4409-8dda-f412da898ff0
 </code></pre>
 查看namespace中网络：  
-<pre><code>
-[root@localhost ~]# ip netns exec 54ba6c67de05b8c5ddb824497eae0071f902dcdea05ce93109d9791453dfeb17 ip addr
+<pre><code>[root@localhost ~]# ip netns exec 54ba6c67de05b8c5ddb824497eae0071f902dcdea05ce93109d9791453dfeb17 ip addr
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
@@ -60,8 +58,7 @@ qrouter-818c4149-355d-4409-8dda-f412da898ff0
        valid_lft forever preferred_lft forever
 </code></pre>
 查看设备28的关联veth pair：
-<pre><code>
-[root@localhost ~]# ip netns exec 54ba6c67de05b8c5ddb824497eae0071f902dcdea05ce93109d9791453dfeb17  ethtool -S nse54c9783-26
+<pre><code>[root@localhost ~]# ip netns exec 54ba6c67de05b8c5ddb824497eae0071f902dcdea05ce93109d9791453dfeb17  ethtool -S nse54c9783-26
 NIC statistics:
      peer_ifindex: 29
 [root@localhost ~]# ip addr
@@ -73,8 +70,7 @@ NIC statistics:
 ...
 </code></pre>
 查看设备29关联设备：
-<pre><code>
-[root@localhost ~]# ovs-vsctl show
+<pre><code>[root@localhost ~]# ovs-vsctl show
 2368aead-599b-4cd8-b2a1-dd01041e5635
     Bridge br-ex
         Port br-ex
