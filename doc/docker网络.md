@@ -57,4 +57,17 @@ root@061364719a22:/usr/local/mysql# ping 186.100.8.117
 PING 186.100.8.117 (186.100.8.117): 48 data bytes
 ping: sending packet: Network is unreachable
 </code><pre>
+那这种方式，有什么用途呢？  
+实际上nova-docker用的就是这种方式，这种方式将网络创建的责任完全交给用户。
+可以实现更加灵活复杂的网络。
+另外这种容器可以可以通过link容器实现通信。（后边详细说）   
+
+##### host方式  
+指定方法：--net="host"
+这种创建出来的容器，可以看到host上所有的网络设备。  
+容器中，对这些设备（比如DUBS）有全部的访问权限。因此docker提示我们，这种方式是不安全的。  
+如果在隔离良好的环境中（比如租户的虚拟机中）使用这种方式，问题不大。
+
+##### container复用方式  
+制定方式： --net="container:<name|id>"
 
