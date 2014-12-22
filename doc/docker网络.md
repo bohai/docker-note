@@ -56,7 +56,7 @@ root@061364719a22:/usr/local/mysql# ip addr
 root@061364719a22:/usr/local/mysql# ping 186.100.8.117
 PING 186.100.8.117 (186.100.8.117): 48 data bytes
 ping: sending packet: Network is unreachable
-</code><pre>
+</code></pre>
 那这种方式，有什么用途呢？  
 实际上nova-docker用的就是这种方式，这种方式将网络创建的责任完全交给用户。
 可以实现更加灵活复杂的网络。
