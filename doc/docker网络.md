@@ -69,5 +69,5 @@ ping: sending packet: Network is unreachable
 如果在隔离良好的环境中（比如租户的虚拟机中）使用这种方式，问题不大。
 
 ##### container复用方式  
-制定方式： --net="container:<name|id>"
+制定方式： --net="container:name or id"
 
