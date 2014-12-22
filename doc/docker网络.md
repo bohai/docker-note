@@ -1,8 +1,7 @@
 ### dockcer网络方式
 ##### bridge方式(默认)
-Host IP为186.100.8.117  
-容器网络为172.17.0.0/16  
-
+Host IP为186.100.8.117, 容器网络为172.17.0.0/16  
+下边我们看下docker网络的实现原理：  
 创建容器：（由于是默认设置，这里没指定网络--net="bridge"。另外可以看到容器内创建了eth0)  
 <pre><code>
 [root@localhost ~]# docker run -i -t mysql:latest /bin/bash
