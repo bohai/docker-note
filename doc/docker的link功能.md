@@ -1,3 +1,5 @@
+通过link方式创建容器，然后我们可以使用被link容器的别名进行访问。  
+从而解除应用对IP的依赖。  
 <pre><code>
 [root@localhost ~]# docker run -i -t   mysql:latest /bin/bash
 root@7afad07a05b0:/usr/local/mysql# ip addr
