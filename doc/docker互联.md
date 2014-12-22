@@ -36,6 +36,7 @@ root@931c7ab8135e:/usr/local/mysql# ip addr
 root@931c7ab8135e:/usr/local/mysql# ping sql
 PING sql (172.17.0.4): 48 data bytes
 56 bytes from 172.17.0.4: icmp_seq=0 ttl=64 time=0.114 ms
+###可以看出来，加了一个静态dns
 root@931c7ab8135e:/usr/local/mysql# cat /etc/hosts
 172.17.0.5      931c7ab8135e
 127.0.0.1       localhost
