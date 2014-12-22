@@ -43,5 +43,18 @@ docker0         8000.56847afe9799       no              vethb689485
 
 ##### none方式
 指定方法： --net="none"
-
+可以看到，这样创建出来的容器完全没有网络：
+<pre><code>
+[root@localhost ~]# docker run -i -t --net="none"  mysql:latest /bin/bash
+root@061364719a22:/usr/local/mysql# ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+root@061364719a22:/usr/local/mysql# ping 186.100.8.117
+PING 186.100.8.117 (186.100.8.117): 48 data bytes
+ping: sending packet: Network is unreachable
+</code><pre>
 
