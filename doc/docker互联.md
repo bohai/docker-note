@@ -1,5 +1,8 @@
-通过link方式创建容器，然后我们可以使用被link容器的别名进行访问。  
+#### 容器互联
+###### link方式
+通过link方式创建容器，然后我们可以使用被link容器的别名进行访问。    
 从而解除应用对IP的依赖。  
+不幸的是,link方式只能解决单机容器间的互联。多机上，容器的互联需要其他的方式。
 <pre><code>
 [root@localhost ~]# docker run -i -t   mysql:latest /bin/bash
 root@7afad07a05b0:/usr/local/mysql# ip addr
@@ -43,3 +46,4 @@ ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
 172.17.0.4      sql
 </code><pre>
+##### 通过容器方式互联   
