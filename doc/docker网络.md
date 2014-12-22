@@ -101,3 +101,4 @@ root@02aac28b9234:/usr/local/mysql# ip addr
     inet6 fe80::42:acff:fe11:3/64 scope link
        valid_lft forever preferred_lft forever
 </code></pre>
+##### 举例（openstack nova-docker中的网络实现方式）
