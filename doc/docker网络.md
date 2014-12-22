@@ -70,4 +70,34 @@ ping: sending packet: Network is unreachable
 
 ##### container复用方式  
 制定方式： --net="container:name or id"
-
+如下例子可以看出来，两者的网络完全相同。
+<pre><code>
+[root@localhost ~]# docker run -i -t   mysql:latest /bin/bash
+root@02aac28b9234:/usr/local/mysql# ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+77: eth0: <BROADCAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 1000
+    link/ether 02:42:ac:11:00:03 brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.3/16 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::42:acff:fe11:3/64 scope link
+       valid_lft forever preferred_lft forever
+[root@localhost ~]# docker run -i -t --net="container:02aac28b9234"  mysql:latest /bin/bash
+root@02aac28b9234:/usr/local/mysql# ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+77: eth0: <BROADCAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 1000
+    link/ether 02:42:ac:11:00:03 brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.3/16 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::42:acff:fe11:3/64 scope link
+       valid_lft forever preferred_lft forever
+</code></pre>
