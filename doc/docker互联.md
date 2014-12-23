@@ -48,3 +48,21 @@ ff02::2 ip6-allrouters
 172.17.0.4      sql
 </code></pre>
 ##### 通过容器方式互联   
+如上面所说，link只适用于一台主机。  
+两台主机，docker官方推荐了如下方式连接两个容器。  
+以下以wordpress+mysql的服务为例。部署在两台机器上的wordpress和mysql通过一对ambassador进行连接。  
+wordpress(in vm1)--link-->ambassador1(in vm1)----socat--->ambassador2(in vm2)--link--->mysql(in vm2)   
+<pre><code>
+启动mysql：
+sudo docker run -d --name mysql mysql
+启动ambassador1：
+sudo docker run -d --link mysql:mysql --name ambassador1 -p 3306:3306 ambassador  
+启动ambassador2：
+sudo docker run -d --name ambassador2 --expose 3306 -e MYSQL_PORT_3306_TCP=tcp://x.x.x.x:3306 ambassador  
+启动wordpress:
+sudo docker run -i -t --rm --link ambassador2:mysql wordpress
+</code></pre>
+
+
+参考：   
+http://blog.csdn.net/sunset108/article/details/40856957
