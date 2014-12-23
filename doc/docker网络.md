@@ -102,3 +102,26 @@ root@02aac28b9234:/usr/local/mysql# ip addr
        valid_lft forever preferred_lft forever
 </code></pre>
 ##### 举例（openstack nova-docker中的网络实现方式）
+openstack的nova-docker插件可以向管理虚拟机一样管理容器。  
+容器网络的创建方式：
+首先创建--net="none"的容器，然后使用如下过程配置容器网络。（以OVS为例，也可以使用linux bridge）   
+<pre><code>
+#创建veth设备
+ip link add name veth00 type veth peer name veth01
+#将veth设备一端接入ovs网桥br-int中
+ovs-vsctl -- --if-exists del-port veth00 -- add-port br-int veth00 -- set Interface veth00 external-ids:iface-id=iface_id external-ids:iface-status=active external-ids:attached-mac=00:ff:00:aa:bb:cc external-ids:vm-uuid=instance_id
+#启动ovs的新加端口
+ip link set veth00 up 
+
+#配置容器的网络namespace
+mkdir -p /var/run/netns
+ln -sf /proc/container_pid/ns/net /var/run/netns/container_id
+
+#将veth另一端加入容器namespace
+ip link set veth01 netns container_id
+#配置容器上该网络设备的mac,ip,gateway
+ip netns exec container_id ip link set veth01 address mac_address
+ip netns exec container_id ifconfig veth01 ip 
+ip netns exec container_id ip route replace default via gateway dev veth01
+</code></pre>
+至此，容器与host上的虚拟网络连通。之后br-int与br-ex/br-tun连通，最终实现与业务网络的连通。
