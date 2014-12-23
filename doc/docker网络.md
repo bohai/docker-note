@@ -125,3 +125,6 @@ ip netns exec container_id ifconfig veth01 ip
 ip netns exec container_id ip route replace default via gateway dev veth01
 </code></pre>
 至此，容器与host上的虚拟网络连通。之后br-int与br-ex/br-tun连通，最终实现与业务网络的连通。
+
+参考：  
+http://segmentfault.com/blog/yexiaobai/1190000000669312
