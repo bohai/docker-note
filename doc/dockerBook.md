@@ -13,10 +13,12 @@
   + 4.3 openstack  
   + 4.4 mesos    
   + 4.5 swarm/machine/compose  
+
 5. 公有云上的docker服务    60Pages   
   + 5.1 amazon docker service  
   + 5.2 google container service  
   + 5.3 阿里docker服务  
+
 6. Docker Pass平台         20Pages   
   + 6.1 deis   
   + 6.2 Flynn   
