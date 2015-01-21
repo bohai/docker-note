@@ -17,6 +17,9 @@
   5.1 amazon docker service  
   5.2 google container service  
   5.3 阿里docker服务  
+6. Docker Pass平台         20Pages
+  6.1 deis
+  6.2 Flynn
 
 时间：
 2月到6月，20Weeks，两周1个子章节。  
