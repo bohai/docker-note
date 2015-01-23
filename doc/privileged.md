@@ -8,13 +8,13 @@ $ docker help run
 大约在0.6版，privileged被引入docker。   
 使用该参数，container内的root拥有真正的root权限。   
 否则，container内的root只是外部的一个普通用户权限。  
-未设置privileged启动的容器：   
+### 未设置privileged启动的容器：   
 <pre><code>
 [root@localhost ~]# docker run -t -i centos:latest bash
 [root@65acccbba42f /]# ls /dev
 console  fd  full  fuse  kcore  null  ptmx  pts  random  shm  stderr  stdin  stdout  tty  urandom  zero
 </code></pre>
-设置privileged启动的容器：   
+### 设置privileged启动的容器：   
 <pre><code>
 [root@localhost ~]# docker run -t -i --privileged centos:latest bash
 [root@c39330902b45 /]# ls /dev/
