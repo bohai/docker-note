@@ -8,11 +8,17 @@ $ docker help run
 大约在0.6版，privileged被引入docker。   
 使用该参数，container内的root拥有真正的root权限。   
 否则，container内的root只是外部的一个普通用户权限。  
+privileged启动的容器，可以看到很多host上的设备，并且可以执行mount。  
+甚至允许你在docker容器中启动docker容器。  
 ### 未设置privileged启动的容器：   
 <pre><code>
 [root@localhost ~]# docker run -t -i centos:latest bash
 [root@65acccbba42f /]# ls /dev
 console  fd  full  fuse  kcore  null  ptmx  pts  random  shm  stderr  stdin  stdout  tty  urandom  zero
+[root@65acccbba42f /]# mkdir /home/test/
+[root@65acccbba42f /]# mkdir /home/test2/
+[root@65acccbba42f /]# mount -o bind /home/test  /home/test2
+mount: permission denied
 </code></pre>
 ### 设置privileged启动的容器：   
 <pre><code>
@@ -27,6 +33,9 @@ cpu              dm-6  kmsg          mem                 ptmx    sda     sg5  st
 cpu_dma_latency  fd    kvm           net                 ptp0    sda1    sg6  tty       tty16  tty24  tty32  tty40  tty49  tty57  tty8   usbmon0  vcs2     vcsa4
 crash            full  loop-control  network_latency     ptp1    sda2    sg7  tty0      tty17  tty25  tty33  tty41  tty5   tty58  tty9   usbmon1  vcs3     vcsa5
 dm-0             fuse  loop0         network_throughput  ptp2    sda3    sg8  tty1      tty18  tty26  tty34  tty42  tty50  tty59  ttyS0  usbmon2  vcs4     vcsa6
+[root@c39330902b45 /]# mkdir /home/test/
+[root@c39330902b45 /]# mkdir /home/test2/
+[root@c39330902b45 /]# mount -o bind /home/test  /home/test2
 </code></pre>
 
 
