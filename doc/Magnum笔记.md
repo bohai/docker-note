@@ -42,5 +42,18 @@ Magnum提供了全新的API服务，用来像nova一样管理容器。
     + 虚拟机中
     + 容器中嵌套   
 
-
+Magnum中的模型
+====================
++ Bay、BayModel、Node
+    + 这组模型是用来管理运行容器的基础设施（关系如图）      
+        + Node是容器的运行节点（虚拟机、裸机、容器）
+        + Bay是一组Node的集合
+        + BayModel是Bay的模板，用来定义Bay的规格，用于创建Bay时使用。
++ ReplicationController、Pod、Container、Service
+    + 这组模型是以应用为中心定义的。（和K8S的模型很一致，关系如图）
+        + Container就是容器，可以是基于docker、LXC、OpenVZ等
+        + Pod是一组容器，用来提供某个功能
+        + ReplicationController用来管理Pods，保证一定数量的Pods存在
+        + Service由一组Pods组成的具体服务
+    
 
