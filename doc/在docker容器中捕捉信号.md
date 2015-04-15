@@ -37,5 +37,23 @@ process.on('SIGTERM', function() {
 
 SIGTERM处理的顺序是，进程会中断执行，先进行信号的处理，然后返回到中断前继续执行。  
 通常的信号有：  
-![image](https://d262ilb51hltx0.cloudfront.net/max/795/1*ZAZWGqxfJh59DsqQlFWakw.png)
-  
+![signal] (https://d262ilb51hltx0.cloudfront.net/max/795/1*ZAZWGqxfJh59DsqQlFWakw.png)
+
+除了SIGKILL/SIGSTOP，其他信号处理都可以被进程中断。  
+
+Docker中的信号
+===================
+'docker kill'用于向docker中的主进程发送信号。  
+<pre><code>
+Usage: docker kill [OPTIONS] CONTAINER [CONTAINER...]
+
+Kill a running container using SIGKILL or a specified signal
+
+  -s, --signal="KILL"    Signal to send to the container
+</code></pre>
+
+发送到docker容器的信号，会被pid=1的主进程处理。  
+
+进程可以忽略信号，也可以使用默认处理或者定义自己的处理函数。  
+
+
