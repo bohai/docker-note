@@ -7,8 +7,8 @@
 内容系本人学习、研究和总结，如有雷同，实属荣幸！   
 
 ==================
-(译文）在docker容器中捕捉信号
-原文地址： https://medium.com/@gchudnov/trapping-signals-in-docker-containers-7a57fdda7d86
+(译文）在docker容器中捕捉信号   
+原文地址： https://medium.com/@gchudnov/trapping-signals-in-docker-containers-7a57fdda7d86   
 
 你是否停止过docker容器？  
 
