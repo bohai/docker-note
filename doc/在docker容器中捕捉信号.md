@@ -209,4 +209,13 @@ docker kill --signal="SIGUSR1" signal-bg-app
 docker kill --signal="SIGTERM" signal-bg-app
 </code></pre>
 
-应用会优雅的停止，并在stdout
+应用会优雅的停止，并在stdout打印对应信息。  
+
+归纳
+=========================  
+信号提供给了一种处理异步事件的能力。DOcker容器中的应用也可以使用。可以从Host上与容器内应用通信，进行配置重载，清理，多进程间的对齐。   
+
+参考
+=========================
+1. http://man7.org/linux/man-pages/man7/signal.7.html
+2. Michael Kerrisk (2010), The Linux Programming Interface: A Linux and UNIX System Programming Handbook. No Starch Press
