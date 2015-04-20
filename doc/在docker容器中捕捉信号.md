@@ -15,7 +15,7 @@
 通常我们可以使用'docker stop'或者'docker kill'停止容器。  
 ‘docker stop’会先向容器发送SIGTERM信号，容器重的主进程会处理它，在一段时间后，发送SIGKILL结束应用。 
 
-使用docker运行应用，你也许会用到信号，来和容器重的应用通信，比如重载配置，在程序结束时清理，进行协调等。
+使用docker运行应用，你也许会用到信号，来和容器中的应用通信，比如重载配置，在程序结束时清理，进行协调等。
 
 那么让我们看下，在Docker环境下信号有哪些作用？  
 
@@ -39,7 +39,7 @@ SIGTERM处理的顺序是，进程会中断执行，先进行信号的处理，�
 通常的信号有：  
 ![signal] (https://d262ilb51hltx0.cloudfront.net/max/795/1*ZAZWGqxfJh59DsqQlFWakw.png)
 
-除了SIGKILL/SIGSTOP，其他信号处理都可以被进程中断。  
+除了SIGKILL/SIGSTOP，其他信号处理都可以被再次中断。  
 
 Docker中的信号
 ===================
@@ -182,7 +182,7 @@ do
 done
 </code></pre>
 
-程序中我们设置了两个信号处理函数。一个黑醋栗SIGUSR1，一个处理SIGTERM从而优雅关闭应用。
+程序中我们设置了两个信号处理函数。一个用户定义信号SIGUSR1，一个处理SIGTERM从而优雅关闭应用。
 
 脚本中，我们使用&将程序后台运行。 
 最终我们使用'wait'来暂停执行一直到子进程退出。当signal信号来临时，'wait'和'waitpid'会被中断。  
