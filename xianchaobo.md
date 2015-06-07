@@ -6,7 +6,7 @@ http://www.slideshare.net/snrism/swarm-container-cluster-service
 
 提纲：  
 1. 个人简介  1页   
-2. swarm介绍  
+2. swarm介绍  20mins
     ＋ warm架构  
     ＋ swarm在三架马车中的位置   
     ＋ swarm社区当前状况／主要参与者  
@@ -15,6 +15,6 @@ http://www.slideshare.net/snrism/swarm-container-cluster-service
     ＋ swarm缺失功能列表／未来路线演进  
     ＋ swarm与其他生态的融合  openstack／mesos／kubernetes   
     ＋ swarm的可能应用场景  
-3. swarm演示  
-    ？？演示什么？
+3. swarm演示  10mins
+    ？？演示什么？   
 4. 感谢／swarm需要更多的开发者和使用者参与   1页   
