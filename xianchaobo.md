@@ -7,7 +7,7 @@ http://www.slideshare.net/snrism/swarm-container-cluster-service
 提纲：  
 1. 个人简介（微博／微信／邮箱／公司／博客／照片）  1页   
 2. swarm介绍  20mins   
-    ＋ warm架构  
+    ＋ swarm架构  
     ＋ swarm在三架马车中的位置   
     ＋ swarm社区当前状况／主要参与者  
     ＋ swarm功能  
