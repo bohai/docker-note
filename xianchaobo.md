@@ -5,7 +5,7 @@ http://www.slideshare.net/snrism/swarm-container-cluster-service
 
 
 提纲：  
-1. 个人简介  1页
+1. 个人简介  1页   
 2. swarm介绍  
     swarm架构  
     swarm在三架马车中的位置   
