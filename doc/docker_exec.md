@@ -21,6 +21,7 @@ Docker exec与Docker attach
 所以大多数情况最好还是使用Docker原生方法，Docker目前主要提供了Docker exec和
 Docker attach两个命令。    
 
+以下在fedora21，docker1.7上验证。   
 ### Docker attach   
 Docker attach可以attach到一个已经运行的容器的stdin，然后进行命令执行的动作。  
 但是需要注意的是，如果从这个stdin中exit，会导致容器的停止。  
@@ -82,33 +83,24 @@ hanging....
 0
 </code></pre>
 
-docker exec执行后，不论命令成功还是失败，实际上都无法获取命令返回值。   
+docker exec执行后，会命令执行返回值。（备注Docker1.3似乎有Bug，不能正确返回命令执行结果）   
 <pre><code>
-[root@localhost temp]# docker exec -i bb2 dir
-2015/07/14 04:08:56 docker-exec: failed to exec: exec: "dir": executable file not found in $PATH
+[root@localhost temp]# docker exec -it bb cat /a.sh
+#!/bin/sh
+echo "running a.sh"
+exit 10
+[root@localhost temp]# docker exec -t bb /a.sh
+running a.sh
 [root@localhost temp]# echo $?
-0
-[root@localhost temp]# docker exec -it bb2 dir
-2015/07/14 04:09:05 docker-exec: failed to exec: exec: "dir": executable file not found in $PATH
+10
+[root@localhost temp]# docker exec -it bb /a.sh
+running a.sh
 [root@localhost temp]# echo $?
-0
-[root@localhost temp]# docker exec -t bb2 dir
-2015/07/14 04:09:19 docker-exec: failed to exec: exec: "dir": executable file not found in $PATH
+10
+[root@localhost temp]# docker exec -i bb /a.sh
+running a.sh
 [root@localhost temp]# echo $?
-0
-[root@localhost temp]# docker exec -it bb2 ls /b.txt
-ls: /b.txt: No such file or directory
-[root@localhost temp]# echo $?
-0
-[root@localhost temp]#
-[root@localhost temp]# docker exec -t bb2 ls /b.txt
-ls: /b.txt: No such file or directory
-[root@localhost temp]# echo $?
-0
-[root@localhost temp]# docker exec -i bb2 ls /b.txt
-ls: /b.txt: No such file or directory
-[root@localhost temp]# echo $?
-0
+10
 </code></pre>
 
 #####关于-d参数  
