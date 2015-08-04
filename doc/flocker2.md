@@ -83,4 +83,7 @@ def getAdapter():
     site = server.Site(root)
     return site
 </code></pre>
-
+##### 其他  
+看完之后，感觉nova-docker未来也可以考虑使用类似于Flocker的方式与Cinder对接。  
+从而为Docker提供丰富的存储能力。 
+唯一欠缺的是，目前Docker不支持运行时挂卷、卸卷操作。    
