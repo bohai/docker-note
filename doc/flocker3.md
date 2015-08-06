@@ -7,7 +7,10 @@
 内容系本人学习、研究和总结，如有雷同，实属荣幸！   
 
 ----------
-# 写一个简单的docker volume Plugin（卷实际上是host上的目录，但是由插件进行管理）
+### 写一个简单的docker volume Plugin
+该插件只是个例子，卷实际上是host上的目录，但是由插件进行管理。  
+代码中使用了calavera写的docker volume plugin框架。  
+需要完成的只是上章所说的docker volume plugin的5个接口。  
 **main.go的代码**
 <pre><code>
 package main
