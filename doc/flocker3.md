@@ -104,3 +104,6 @@ func main() {
 hello docker plugin
 </code></pre>
 
+备注：   
+由于volume plugin是docker的实验特性。因此正式的release中并未包含。需要使用编译了实验特性的版本。   
+可以在```https://experimental.docker.com/builds/Linux/x86_64/docker-latest```下载。
