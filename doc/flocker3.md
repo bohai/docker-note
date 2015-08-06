@@ -96,7 +96,7 @@ func main() {
 [root@localhost fake-volume]# ./fake-volume
 [root@localhost fake-volume]# ls /run/docker/plugins/fakeVol.sock
 /run/docker/plugins/fakeVol.sock
-[root@localhost temp]# docker5500 run -it --rm  -v test:/test --volume-driver=fakeVol busybox:latest /bin/sh
+[root@localhost temp]# docker run -it --rm  -v test:/test --volume-driver=fakeVol busybox:latest /bin/sh
 / # ls /test/
 / # touch /test/a.txt
 / # echo "hello docker plugin" > /test/a.txt
@@ -104,6 +104,6 @@ func main() {
 hello docker plugin
 </code></pre>
 
-备注：   
-由于volume plugin是docker的实验特性。因此正式的release中并未包含。需要使用编译了实验特性的版本。   
-可以在```https://experimental.docker.com/builds/Linux/x86_64/docker-latest```下载。
+> 备注：   
+> 由于volume plugin是docker的实验特性。因此正式的release中并未包含。需要使用编译了实验特性的版本。   
+> 可以在```https://experimental.docker.com/builds/Linux/x86_64/docker-latest```下载。
