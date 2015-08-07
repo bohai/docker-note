@@ -26,7 +26,8 @@ Cluster是Pods、Replication Controllers、Services的基础。
 > A pod models an application-specific "logical host" in a containerized environment.     
 
 由一个或多个container组成，运行在相同的服务器或者虚拟机中。是调度的最小单位。  
-Pods内的容器共享数据（能看到相同的卷、目录）、通信（网络namespace相同，可以使用localhost通信）。  
+Pods内的容器共享数据（能看到相同的卷、目录）、通信（网络namespace相同，可以使用localhost通信）。
+
 - Replication Controllers  
 监控、管理Pod副本的个数。  
 主要用途：Rescheduling、Scaling、Rolling updates、Multiple release tracks。  
