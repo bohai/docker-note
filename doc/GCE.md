@@ -43,7 +43,7 @@ Pods内的容器共享数据（能看到相同的卷、目录）、通信（网�
 - Resize Replication Controller
 - 滚动更新  
 - 更新Cluster   
-- 
+ 
 ## 过去半年的重要更新  
 - 支持Kubernetes1.0
 - Google container service的master node不再通过创建instance创建。而是以托管服务形式提供（由Google提供可靠性保证）。   
