@@ -32,7 +32,8 @@ Pods内的容器共享数据（能看到相同的卷、目录）、通信（网�
 监控、管理Pod副本的个数。  
 主要用途：Rescheduling、Scaling、Rolling updates、Multiple release tracks。  
 - Services  
-提供对Pods服务的路由。
+提供对Pods服务的路由。  
+
 ## 基本功能  
 - 创建Clusters
 - Resize Clusters
@@ -41,7 +42,8 @@ Pods内的容器共享数据（能看到相同的卷、目录）、通信（网�
 - 创建服务  
 - Resize Replication Controller
 - 滚动更新
-- 更新Cluster
+- 更新Cluster  
+- 
 ## 过去半年的重要更新  
 - 支持Kubernetes1.0
 - Google container service的master node不再通过创建instance创建。而是以托管服务形式提供（由Google提供可靠性保证）。   
