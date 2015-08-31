@@ -1,0 +1,16 @@
+..  
+声明：   
+本博客欢迎转发，但请保留原作者信息!   
+博客地址：http://blog.csdn.net/halcyonbaby   
+新浪微博：[@寻觅神迹]( www.weibo.com/u/2230330930)
+
+内容系本人学习、研究和总结，如有雷同，实属荣幸！   
+
+-----
+### 
+
+### 参考
+1. https://github.com/coreos/rkt
+2. https://coreos.com/blog/rkt-0.8-with-new-vm-support/
+
+
