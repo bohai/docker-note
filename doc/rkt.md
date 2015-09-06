@@ -56,7 +56,9 @@ root      2006  1928  2 03:12 pts/2    00:00:06 ./stage1/rootfs/lkvm run --name 
 我们可以看出来“console=hvc0 init=/usr/lib/systemd/systemd no_timer_check noreplace-smp systemd.default_standard_error=journal+console systemd.default_standard_output=journal+console ip=172.16.28.5::172.16.28.4:255.255.255.254::eth0::: tsc=reliable MACHINEID=8d4ce168-6825-4fbb-b52b-738a3c891a9d quiet”这串是内核的启动参数。   
 
 kernel使用的是stage1/rootfs/bzImage。    
-
+#### 试着手工运行  
+<pre><code>[root@localhost 8d4ce168-6825-4fbb-b52b-738a3c891a9d]# ./stage1/rootfs/lkvm run --name rkt-8d4ce168-6825-4fbb-b52b-738a3c891a9d-manual2 --no-dhcp --cpu 1 --mem 128 --console=virtio --kernel stage1/rootfs/bzImage --disk stage1/rootfs --params "console=hvc0 init=/usr/lib/systemd/systemd no_timer_check noreplace-smp systemd.default_standard_error=journal+console systemd.default_standard_output=journal+console ip=172.16.28.5::172.16.28.4:255.255.255.254::eth0::: tsc=reliable MACHINEID=8d4ce168-6825-4fbb-b52b-738a3c891a9d quiet"
+</code></pre>
 
 ### 遇到的问题 
 1. permission denied   
