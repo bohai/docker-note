@@ -65,6 +65,17 @@ kernel使用的是stage1/rootfs/bzImage。
 overlay on /var/lib/rkt/pods/run/8d4ce168-6825-4fbb-b52b-738a3c891a9d/stage1/rootfs type overlay (rw,relatime,context="system_u:object_r:svirt_sandbox_file_t:s0:c353,c500",lowerdir=/var/lib/rkt/cas/tree/sha512-ddff10a5cf165fc34d66a70542edbcd6eda23144e6259cd2f06ad503625fccb6/rootfs,upperdir=/var/lib/rkt/pods/run/8d4ce168-6825-4fbb-b52b-738a3c891a9d/overlay/sha512-ddff10a5cf165fc34d66a70542edbcd6eda23144e6259cd2f06ad503625fccb6/upper,workdir=/var/lib/rkt/pods/run/8d4ce168-6825-4fbb-b52b-738a3c891a9d/overlay/sha512-ddff10a5cf165fc34d66a70542edbcd6eda23144e6259cd2f06ad503625fccb6/work)
 overlay on /var/lib/rkt/pods/run/8d4ce168-6825-4fbb-b52b-738a3c891a9d/stage1/rootfs/opt/stage2/etcd/rootfs type overlay (rw,relatime,context="system_u:object_r:svirt_sandbox_file_t:s0:c353,c500",lowerdir=/var/lib/rkt/cas/tree/sha512-91e98d7f1679a097c878203c9659f2a26ae394656b3147963324c61fa3832f15/rootfs,upperdir=/var/lib/rkt/pods/run/8d4ce168-6825-4fbb-b52b-738a3c891a9d/overlay/sha512-91e98d7f1679a097c878203c9659f2a26ae394656b3147963324c61fa3832f15/upper/etcd,workdir=/var/lib/rkt/pods/run/8d4ce168-6825-4fbb-b52b-738a3c891a9d/overlay/sha512-91e98d7f1679a097c878203c9659f2a26ae394656b3147963324c61fa3832f15/work/etcd)
 </code></pre>
+
+可以看出来，挂载的目录实际上是两个rkt镜像。 
+<pre><code>[root@localhost systemd]# rkt image list
+KEY                                                                     APPNAME                         IMPORTTIME                              LATEST
+sha512-1eba37d9b344b33d272181e176da111ef2fdd4958b88ba4071e56db9ac07cf62 coreos.com/etcd:v2.0.4          2015-08-31 21:48:42.644 -0400 EDT       false
+sha512-91e98d7f1679a097c878203c9659f2a26ae394656b3147963324c61fa3832f15 coreos.com/etcd:v2.0.9          2015-08-31 22:16:00.081 -0400 EDT       false
+sha512-ca0bee4ecb888d10cf0816ebe7e16499230ab349bd3126976ab60b9b1db2e120 coreos.com/rkt/stage1:0.8.0     2015-09-01 22:29:04.63 -0400 EDT        false
+sha512-05119c0508aae89c99d1d2077725c0192009f2da5b955dcad5631d7626993433 centos:latest                   2015-09-01 22:30:36.366 -0400 EDT       true
+sha512-ddff10a5cf165fc34d66a70542edbcd6eda23144e6259cd2f06ad503625fccb6 coreos.com/rkt/stage1:0.8.0     2015-09-06 03:12:25.397 -0400 EDT       false
+</code></pre>
+
 #### 试着手工运行  
 <pre><code>[root@localhost 8d4ce168-6825-4fbb-b52b-738a3c891a9d]# ./stage1/rootfs/lkvm run --name rkt-8d4ce168-6825-4fbb-b52b-738a3c891a9d-manual2 --no-dhcp --cpu 1 --mem 128 --console=virtio --kernel stage1/rootfs/bzImage --disk stage1/rootfs --params "console=hvc0 init=/usr/lib/systemd/systemd no_timer_check noreplace-smp systemd.default_standard_error=journal+console systemd.default_standard_output=journal+console ip=172.16.28.5::172.16.28.4:255.255.255.254::eth0::: tsc=reliable MACHINEID=8d4ce168-6825-4fbb-b52b-738a3c891a9d quiet"
 </code></pre>
