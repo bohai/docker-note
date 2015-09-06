@@ -53,8 +53,8 @@ root      2006  1928  2 03:12 pts/2    00:00:06 ./stage1/rootfs/lkvm run --name 
 </code></pre>
 
 #### 原理分析
-我们可以看出来“console=hvc0 init=/usr/lib/systemd/systemd no_timer_check noreplace-smp systemd.default_standard_error=journal+console systemd.default_standard_output=journal+console ip=172.16.28.5::172.16.28.4:255.255.255.254::eth0::: tsc=reliable MACHINEID=8d4ce168-6825-4fbb-b52b-738a3c891a9d quiet”
-这串是内核的启动参数。   
+我们可以看出来“console=hvc0 init=/usr/lib/systemd/systemd no_timer_check noreplace-smp systemd.default_standard_error=journal+console systemd.default_standard_output=journal+console ip=172.16.28.5::172.16.28.4:255.255.255.254::eth0::: tsc=reliable MACHINEID=8d4ce168-6825-4fbb-b52b-738a3c891a9d quiet”这串是内核的启动参数。   
+
 kernel使用的是stage1/rootfs/bzImage。    
 
 
