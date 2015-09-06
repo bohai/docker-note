@@ -55,7 +55,16 @@ root      2006  1928  2 03:12 pts/2    00:00:06 ./stage1/rootfs/lkvm run --name 
 #### 原理分析
 我们可以看出来“console=hvc0 init=/usr/lib/systemd/systemd no_timer_check noreplace-smp systemd.default_standard_error=journal+console systemd.default_standard_output=journal+console ip=172.16.28.5::172.16.28.4:255.255.255.254::eth0::: tsc=reliable MACHINEID=8d4ce168-6825-4fbb-b52b-738a3c891a9d quiet”这串是内核的启动参数。   
 
-kernel使用的是stage1/rootfs/bzImage。    
+kernel使用的是stage1/rootfs/bzImage。
+<pre><code>[root@localhost temp]# mountpoint /var/lib/rkt/pods/run/8d4ce168-6825-4fbb-b52b-738a3c891a9d/stage1/rootfs/
+/var/lib/rkt/pods/run/8d4ce168-6825-4fbb-b52b-738a3c891a9d/stage1/rootfs/ is a mountpoint
+[root@localhost temp]# mountpoint /var/lib/rkt/pods/run/8d4ce168-6825-4fbb-b52b-738a3c891a9d/stage1/rootfs/opt/stage2/etcd/rootfs/
+/var/lib/rkt/pods/run/8d4ce168-6825-4fbb-b52b-738a3c891a9d/stage1/rootfs/opt/stage2/etcd/rootfs/ is a mountpoint
+[root@localhost temp]# mount
+...
+overlay on /var/lib/rkt/pods/run/8d4ce168-6825-4fbb-b52b-738a3c891a9d/stage1/rootfs type overlay (rw,relatime,context="system_u:object_r:svirt_sandbox_file_t:s0:c353,c500",lowerdir=/var/lib/rkt/cas/tree/sha512-ddff10a5cf165fc34d66a70542edbcd6eda23144e6259cd2f06ad503625fccb6/rootfs,upperdir=/var/lib/rkt/pods/run/8d4ce168-6825-4fbb-b52b-738a3c891a9d/overlay/sha512-ddff10a5cf165fc34d66a70542edbcd6eda23144e6259cd2f06ad503625fccb6/upper,workdir=/var/lib/rkt/pods/run/8d4ce168-6825-4fbb-b52b-738a3c891a9d/overlay/sha512-ddff10a5cf165fc34d66a70542edbcd6eda23144e6259cd2f06ad503625fccb6/work)
+overlay on /var/lib/rkt/pods/run/8d4ce168-6825-4fbb-b52b-738a3c891a9d/stage1/rootfs/opt/stage2/etcd/rootfs type overlay (rw,relatime,context="system_u:object_r:svirt_sandbox_file_t:s0:c353,c500",lowerdir=/var/lib/rkt/cas/tree/sha512-91e98d7f1679a097c878203c9659f2a26ae394656b3147963324c61fa3832f15/rootfs,upperdir=/var/lib/rkt/pods/run/8d4ce168-6825-4fbb-b52b-738a3c891a9d/overlay/sha512-91e98d7f1679a097c878203c9659f2a26ae394656b3147963324c61fa3832f15/upper/etcd,workdir=/var/lib/rkt/pods/run/8d4ce168-6825-4fbb-b52b-738a3c891a9d/overlay/sha512-91e98d7f1679a097c878203c9659f2a26ae394656b3147963324c61fa3832f15/work/etcd)
+</code></pre>
 #### 试着手工运行  
 <pre><code>[root@localhost 8d4ce168-6825-4fbb-b52b-738a3c891a9d]# ./stage1/rootfs/lkvm run --name rkt-8d4ce168-6825-4fbb-b52b-738a3c891a9d-manual2 --no-dhcp --cpu 1 --mem 128 --console=virtio --kernel stage1/rootfs/bzImage --disk stage1/rootfs --params "console=hvc0 init=/usr/lib/systemd/systemd no_timer_check noreplace-smp systemd.default_standard_error=journal+console systemd.default_standard_output=journal+console ip=172.16.28.5::172.16.28.4:255.255.255.254::eth0::: tsc=reliable MACHINEID=8d4ce168-6825-4fbb-b52b-738a3c891a9d quiet"
 </code></pre>
