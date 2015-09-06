@@ -8,6 +8,7 @@
 
 -----
 ### 启动一个完全基于容器隔离的rkt实例
+可以看出来基于nspaswn创建rkt实例。  
 <pre><code>[root@localhost temp]# rkt run coreos.com/etcd:v2.0.9
 rkt: searching for app image coreos.com/etcd:v2.0.9
 discovery failed for "coreos.com/etcd:v2.0.9": Get http://coreos.com?ac-discovery=1: dial tcp: i/o timeout. Trying to find image in the store.
@@ -33,6 +34,7 @@ root      1862  1822  0 03:08 pts/1    00:00:00 stage1/rootfs/usr/lib/ld-linux-x
 </code></pre>
 
 ### 启动一个基于VM隔离的rkt实例
+可以看到基于lkvm创建容器。
 <pre><code>[root@localhost rkt-v0.8.0]# rkt run --stage1-image=stage1-lkvm.aci --private-net  coreos.com/etcd:v2.0.9
 rkt: searching for app image coreos.com/etcd:v2.0.9
 discovery failed for "coreos.com/etcd:v2.0.9": Get http://coreos.com?ac-discovery=1: dial tcp: i/o timeout. Trying to find image in the store.
