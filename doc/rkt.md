@@ -8,7 +8,29 @@
 
 -----
 ### 启动一个完全基于容器隔离的rkt实例
-
+<pre><code>[root@localhost temp]# rkt run coreos.com/etcd:v2.0.9
+rkt: searching for app image coreos.com/etcd:v2.0.9
+discovery failed for "coreos.com/etcd:v2.0.9": Get http://coreos.com?ac-discovery=1: dial tcp: i/o timeout. Trying to find image in the store.
+2015/09/06 03:08:53 Preparing stage1
+2015/09/06 03:08:53 Loading image sha512-91e98d7f1679a097c878203c9659f2a26ae394656b3147963324c61fa3832f15
+2015/09/06 03:08:53 Writing pod manifest
+2015/09/06 03:08:53 Setting up stage1
+2015/09/06 03:08:53 Writing image manifest
+2015/09/06 03:08:53 Wrote filesystem to /var/lib/rkt/pods/run/dc2e04df-630f-4b6c-bb20-860728f33b24
+2015/09/06 03:08:53 Writing image manifest
+2015/09/06 03:08:53 Pivoting to filesystem /var/lib/rkt/pods/run/dc2e04df-630f-4b6c-bb20-860728f33b24
+2015/09/06 03:08:53 Execing /init
+[root@localhost temp]# ps -ef|grep 1914
+root      1914  1909  0 03:08 ?        00:00:02 /etcd
+root      2214  2184  0 03:19 pts/4    00:00:00 grep --color=auto 1914
+[root@localhost temp]# ps -ef|grep 1909
+root      1909  1862  0 03:08 ?        00:00:00 /usr/lib/systemd/systemd --default-standard-output=tty --log-target=null --log-level=warning --show-status=0
+root      1910  1909  0 03:08 ?        00:00:00 /usr/lib/systemd/systemd-journald
+root      1914  1909  0 03:08 ?        00:00:02 /etcd
+root      2216  2184  0 03:19 pts/4    00:00:00 grep --color=auto 1909
+[root@localhost temp]# ps -ef|grep 1862
+root      1862  1822  0 03:08 pts/1    00:00:00 stage1/rootfs/usr/lib/ld-linux-x86-64.so.2 stage1/rootfs/usr/bin/systemd-nspawn --boot --register=true --link-journal=try-guest --quiet --uuid=dc2e04df-630f-4b6c-bb20-860728f33b24 --machine=rkt-dc2e04df-630f-4b6c-bb20-860728f33b24 --directory=stage1/rootfs -- --default-standard-output=tty --log-target=null --log-level=warning --show-status=0
+</code></pre>
 
 ### 启动一个基于VM隔离的rkt实例
 <pre><code>[root@localhost rkt-v0.8.0]# rkt run --stage1-image=stage1-lkvm.aci --private-net  coreos.com/etcd:v2.0.9
