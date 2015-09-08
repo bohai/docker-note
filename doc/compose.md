@@ -6,3 +6,8 @@
 4. cd cli/main/
 5. go build
 6. ./main
+### 精简版
+0. export GOPATH="your work directory":"your libcompose GODEP directory"  
+1. cd cli/main/  
+2. go build  
+
