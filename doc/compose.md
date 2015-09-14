@@ -12,7 +12,8 @@ libcompose compile
 
 精简版
 ----
-0. export GOPATH="your work directory":"your libcompose GODEP directory"  
+0. export GOPATH="your work directory":"your libcompose GODEP directory" 
+<pre><code>举例：GOPATH=/home/temp/go/src/github.com/docker/libcompose/Godeps/_workspace/:/home/temp/go/</code></pre>
 1. cd cli/main/  
 2. go build  
 
