@@ -1,0 +1,1 @@
+git commit -s --amend -m "support -v for the rm command"
