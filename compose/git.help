@@ -39,3 +39,6 @@ Username for 'https://github.com': bohai
 Password for 'https://bohai@github.com': 
 To https://github.com/bohai/libcompose
  - [deleted]         add-support-delete-with-vol
+
+4. 获取远端分支
+git fetch bohai check-service-name:check-service-name
