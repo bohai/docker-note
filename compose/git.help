@@ -32,3 +32,10 @@ Writing objects: 100% (48/48), 6.34 KiB, done.
 Total 48 (delta 32), reused 3 (delta 2)
 To https://github.com/bohai/libcompose
  * [new branch]      rm_para_v -> add-support-delete-with-vol
+
+3.删除远端分支
+dev@0275c9408e06:/go/src/github.com/docker/libcompose/cli/main$ git push bohai :add-support-delete-with-vol
+Username for 'https://github.com': bohai
+Password for 'https://bohai@github.com': 
+To https://github.com/bohai/libcompose
+ - [deleted]         add-support-delete-with-vol
