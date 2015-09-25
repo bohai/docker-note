@@ -1,1 +1,34 @@
+1. 如何带sign提交
 git commit -s --amend -m "support -v for the rm command"
+
+2. 如何往远端push
+dev@0275c9408e06:/go/src/github.com/docker/libcompose$ cat .git/config 
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	fetch = +refs/heads/*:refs/remotes/origin/*
+	url = https://github.com/docker/libcompose
+[remote "bohai"]
+	fetch = +refs/heads/*:refs/remotes/origin/*
+	url = https://github.com/bohai/libcompose
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+dev@0275c9408e06:/go/src/github.com/docker/libcompose$ git branch -a  
+  master
+* rm_para_v
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/add-dnephin-to-maintainers
+  remotes/origin/master
+dev@0275c9408e06:/go/src/github.com/docker/libcompose$ git push bohai rm_para_v:add-support-delete-with-vol
+Username for 'https://github.com': bohai
+Password for 'https://bohai@github.com': 
+Counting objects: 65, done.
+Compressing objects: 100% (45/45), done.
+Writing objects: 100% (48/48), 6.34 KiB, done.
+Total 48 (delta 32), reused 3 (delta 2)
+To https://github.com/bohai/libcompose
+ * [new branch]      rm_para_v -> add-support-delete-with-vol
