@@ -1,3 +1,5 @@
+1. 实现ps -q功能
+
 dev@f65b297dae93:/go/src/github.com/docker/libcompose$ git diff
 diff --git a/cli/app/app.go b/cli/app/app.go
 index b07f4ec..a77c12a 100644
