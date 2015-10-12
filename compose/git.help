@@ -42,3 +42,8 @@ To https://github.com/bohai/libcompose
 
 4. 获取远端分支
 git fetch bohai check-service-name:check-service-name
+
+5. rebase
+git rebase master
+如有冲突,解决然后git  add
+然后git rebase --continue
