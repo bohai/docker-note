@@ -1,0 +1,6 @@
+coreos安装：
+
+http://qiankunli.github.io/2014/12/06/coreos_installation.html
+
+http://wiselyman.iteye.com/blog/2151813
+
