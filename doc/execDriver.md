@@ -20,8 +20,8 @@ Docker架构图：
 未来还会有windows driver。  
 
 代码路径为：
-docker/docker.go(func main)->docker/daemon.go(func handleGlobalDaemonFlag)->daemon/daemon.go(func newDaemon)
-在newDaemon中为结构Daemon的execDriver初始化对应的driver（根据-e的参数指定）。
+docker/docker.go(func main)->docker/daemon.go(func handleGlobalDaemonFlag)->daemon/daemon.go(func newDaemon)   
+在newDaemon中为结构Daemon的execDriver初始化对应的driver（根据-e的参数指定）。  
 
 ### execDriver目前被用到的接口
 <pre><code>
