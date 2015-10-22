@@ -12,7 +12,7 @@ daemon/container.go:    if err := container.daemon.execDriver.Unpause(container.
 daemon/exec.go: if err := checkExecSupport(d.execDriver.Name()); err != nil {
 daemon/exec.go: exitStatus, err := d.execDriver.Exec(c.command, ExecConfig.ProcessConfig, pipes, hooks)
 daemon/delete.go:       if err = daemon.execDriver.Clean(container.ID); err != nil {
-</code><pre>
+</code></pre>
 ### Docker目前的命令归类
 <pre><code>
 容器相关：
