@@ -1,6 +1,27 @@
-### Docker的execDriver机制
+### Docker driver指定方式
 <pre><code>
+[root@localhost temp]# docker help daemon
+
+Usage:  docker daemon [OPTIONS]
+
+Enable daemon mode
+
+...
+  -e, --exec-driver=native             Exec driver to use
+...
 </code></pre>
+
+### Docker的execDriver机制
+Docker架构图：  
+![docker](http://www.sel.zju.edu.cn/wp-content/uploads/2014/12/docker-1-10-1.jpg)
+
+可以看出，execDriver是插件机制。   
+对应代码在docker/deamon/execdriver下，可以看出来目前有lxc、native两种driver。  
+未来还会有windows driver。  
+
+代码路径为：
+docker/docker.go(func main)->docker/daemon.go(func handleGlobalDaemonFlag)->daemon/daemon.go(func newDaemon)
+在newDaemon中为结构Daemon的execDriver初始化对应的driver（根据-e的参数指定）。
 
 ### execDriver目前被用到的接口
 <pre><code>
@@ -17,7 +38,12 @@ daemon/exec.go: if err := checkExecSupport(d.execDriver.Name()); err != nil {
 daemon/exec.go: exitStatus, err := d.execDriver.Exec(c.command, ExecConfig.ProcessConfig, pipes, hooks)
 daemon/delete.go:       if err = daemon.execDriver.Clean(container.ID); err != nil {
 </code></pre>
+
+### 写一个自己的execDriver  
+
+
 ### Docker目前的命令归类
+可以看出，docker目前并没有动态参数修改类的指令。  
 <pre><code>
 容器相关：
     attach    Attach to a running container
@@ -68,15 +94,4 @@ daemon/delete.go:       if err = daemon.execDriver.Clean(container.ID); err != n
     version   Show the Docker version information
 </code></pre>
 
-### Docker driver指定方式
-<pre><code>
-[root@localhost temp]# docker help daemon
 
-Usage:  docker daemon [OPTIONS]
-
-Enable daemon mode
-
-...
-  -e, --exec-driver=native             Exec driver to use
-...
-</code></pre>
