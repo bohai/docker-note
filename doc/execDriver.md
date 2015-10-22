@@ -64,4 +64,15 @@ daemon/delete.go:       if err = daemon.execDriver.Clean(container.ID); err != n
     version   Show the Docker version information
 </code></pre>
 
+### Docker driver指定方式
+<pre><code>
+[root@localhost temp]# docker help daemon
 
+Usage:  docker daemon [OPTIONS]
+
+Enable daemon mode
+
+...
+  -e, --exec-driver=native             Exec driver to use
+...
+</code></pre>
