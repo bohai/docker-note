@@ -94,4 +94,10 @@ daemon/delete.go:       if err = daemon.execDriver.Clean(container.ID); err != n
     version   Show the Docker version information
 </code></pre>
 
+### 编译docker  
+其实很简单，我们可以利用现有的docker-dev进行编译：  
+1. docker pull docker-dev:1.8.3  
+2. docker run -it --name docker-dev docker-dev:1.8.3 /bin/bash  
+3. hack/make.sh binary  
+
 
