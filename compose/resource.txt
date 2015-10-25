@@ -1,0 +1,2 @@
+1. 把compose脚本转化为kubernetes脚本  
+https://github.com/kelseyhightower/compose2kube.git
