@@ -84,7 +84,167 @@ daemon/delete.go:       if err = daemon.execDriver.Clean(container.ID); err != n
 </code></pre>
 
 ### 写一个自己的execDriver  
+<pre><code>
+[root@localhost cvm]# cat driver.go
+package cvm
 
+import (
+        "fmt"
+        "sync"
+        "time"
+
+        sysinfo "github.com/docker/docker/pkg/system"
+        "github.com/docker/docker/daemon/execdriver"
+        "github.com/opencontainers/runc/libcontainer"
+)
+
+// Define constants for cvm driver
+const (
+        DriverName = "cvm"
+        Version    = "0.1"
+)
+
+// Driver contains all information for native driver,
+// it implements execdriver.Driver.
+type Driver struct {
+        root             string
+        initPath         string
+        activeContainers map[string]libcontainer.Container
+        machineMemory    int64
+        factory          libcontainer.Factory
+        sync.Mutex
+}
+
+type info struct {
+    ID    string
+    driver *Driver
+}
+
+// IsRunning is determined by looking for the
+// pid file for a container.  If the file exists then the
+// container is currently running
+func (i *info) IsRunning() bool {
+    _, ok := i.driver.activeContainers[i.ID]
+    return ok
+}
+
+
+func NewDriver(root, initPath string, options []string) (*Driver, error) {
+
+        meminfo, err := sysinfo.ReadMemInfo()
+        if err != nil {
+                return nil, err
+        }
+
+        return &Driver{
+                root:             root,
+                initPath:         initPath,
+                activeContainers: make(map[string]libcontainer.Container),
+                machineMemory:    meminfo.MemTotal,
+                factory:          nil,
+        }, nil
+}
+
+// Run implements the exec driver Driver interface,
+// it calls libcontainer APIs to run a container.
+func (d *Driver) Run(c *execdriver.Command, pipes *execdriver.Pipes, startCallback execdriver.StartCallback) (execdriver.ExitStatus, error) {
+        return execdriver.ExitStatus{ExitCode: 0}, nil
+}
+
+func (d *Driver) Kill(c *execdriver.Command, sig int) error {
+        return nil
+}
+
+func (d *Driver) Pause(c *execdriver.Command) error {
+        return nil
+}
+
+func (d *Driver) Unpause(c *execdriver.Command) error {
+        return nil
+}
+
+func (d *Driver) Terminate(c *execdriver.Command) error {
+        return nil
+}
+
+// Info implements the exec driver Driver interface.
+func (d *Driver) Info(id string) execdriver.Info {
+        return &info{
+                ID:     "id",
+                driver: d,
+        }
+}
+
+// Name implements the exec driver Driver interface.
+func (d *Driver) Name() string {
+        return fmt.Sprintf("%s-%s", DriverName, Version)
+}
+
+// GetPidsForContainer implements the exec driver Driver interface.
+func (d *Driver) GetPidsForContainer(id string) ([]int, error) {
+        a := []int{1, 2, 3}
+        return a, nil
+
+}
+
+// Stats implements the exec driver Driver interface.
+func (d *Driver) Stats(id string) (*execdriver.ResourceStats, error) {
+        now := time.Now()
+        return &execdriver.ResourceStats{
+                Stats:       nil,
+                Read:        now,
+                MemoryLimit: 1000,
+        }, nil
+}
+
+// SupportsHooks implements the execdriver Driver interface.
+// The libcontainer/runC-based native execdriver does exploit the hook mechanism
+func (d *Driver) SupportsHooks() bool {
+        return true
+}
+
+// Clean implements the exec driver Driver interface.
+func (d *Driver) Clean(id string) error {
+        return nil
+}
+
+func (d *Driver) Exec(c *execdriver.Command, processConfig *execdriver.ProcessConfig, pipes *execdriver.Pipes, startCallback execdriver.StartCallback) (int, error) {
+        return 0, nil
+}
+[root@localhost cvm]# cat execdrivers_linux.go
+// +build linux
+
+package execdrivers
+
+import (
+        "fmt"
+        "path"
+
+        "github.com/Sirupsen/logrus"
+        "github.com/docker/docker/daemon/execdriver"
+        "github.com/docker/docker/daemon/execdriver/lxc"
+        "github.com/docker/docker/daemon/execdriver/cvm"
+        "github.com/docker/docker/daemon/execdriver/native"
+        "github.com/docker/docker/pkg/sysinfo"
+)
+
+func NewDriver(name string, options []string, root, libPath, initPath string, sysInfo *sysinfo.SysInfo) (execdriver.Driver, error) {
+        switch name {
+        case "lxc":
+                // we want to give the lxc driver the full docker root because it needs
+                // to access and write config and template files in /var/lib/docker/containers/*
+                // to be backwards compatible
+                logrus.Warn("LXC built-in support is deprecated.")
+                return lxc.NewDriver(root, libPath, initPath, sysInfo.AppArmor)
+        case "native":
+                return native.NewDriver(path.Join(root, "execdriver", "native"), initPath, options)
+        case "cvm":
+                return cvm.NewDriver(path.Join(root, "execdriver", "cvm"), initPath, options)
+        }
+        return nil, fmt.Errorf("unknown exec driver %s", name)
+}
+
+</code></pre>
 
 ### Docker目前的命令归类
 可以看出，docker目前并没有动态参数修改类的指令。  
