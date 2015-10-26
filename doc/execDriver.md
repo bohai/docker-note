@@ -25,46 +25,18 @@ docker/docker.go(func main)->docker/daemon.go(func handleGlobalDaemonFlag)->daem
 
 ### execDriver的接口一览
 <pre><code>
- 70 type Driver interface {
- 71     // Run executes the process, blocks until the process exits and returns
- 72     // the exit code. It's the last stage on Docker side for running a container.
- 73     Run(c *Command, pipes *Pipes, hooks Hooks) (ExitStatus, error)
- 74
- 75     // Exec executes the process in an existing container, blocks until the
- 76     // process exits and returns the exit code.
- 77     Exec(c *Command, processConfig *ProcessConfig, pipes *Pipes, hooks Hooks) (int, error)
- 78
- 79     // Kill sends signals to process in container.
- 80     Kill(c *Command, sig int) error
- 81
- 82     // Pause pauses a container.
- 83     Pause(c *Command) error
- 84
- 85     // Unpause unpauses a container.
- 86     Unpause(c *Command) error
- 87
- 88     // Name returns the name of the driver.
- 89     Name() string
- 90
- 91     // Info returns the configuration stored in the driver struct,
- 92     // "temporary" hack (until we move state from core to plugins).
- 93     Info(id string) Info
- 94
- 95     // GetPidsForContainer returns a list of pid for the processes running in a container.
- 96     GetPidsForContainer(id string) ([]int, error)
- 97
- 98     // Terminate kills a container by sending signal SIGKILL.
- 99     Terminate(c *Command) error
-100
-101     // Clean removes all traces of container exec.
-102     Clean(id string) error
-103
-104     // Stats returns resource stats for a running container
-105     Stats(id string) (*ResourceStats, error)
-106
-107     // SupportsHooks refers to the driver capability to exploit pre/post hook functionality
-108     SupportsHooks() bool
-109 }
+        Run(c *Command, pipes *Pipes, startCallback StartCallback) (ExitStatus, error) // Run executes the process and blocks until the process exits and returns the exit code
+        // Exec executes the process in an existing container, blocks until the process exits and returns the exit code
+        Exec(c *Command, processConfig *ProcessConfig, pipes *Pipes, startCallback StartCallback) (int, error)
+        Kill(c *Command, sig int) error
+        Pause(c *Command) error
+        Unpause(c *Command) error
+        Name() string                                 // Driver name
+        Info(id string) Info                          // "temporary" hack (until we move state from core to plugins)
+        GetPidsForContainer(id string) ([]int, error) // Returns a list of pids for the given container.
+        Terminate(c *Command) error                   // kill it with fire
+        Clean(id string) error                        // clean all traces of container exec
+        Stats(id string) (*ResourceStats, error)      // Get resource stats for a running container
 </code></pre>
 
 ### execDriver目前被用到的接口
