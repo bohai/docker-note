@@ -1,0 +1,10 @@
+1. kubernetes网络原理，介绍的很清楚
+原文：http://www.dasblinkenlichten.com/kubernetes-101-networking/
+翻译（不太好）：http://dockone.io/article/520
+
+2. kubernetes网络基本概念
+http://blog.csdn.net/yeasy/article/details/46443933
+
+3. kubernetes对象创建流程
+http://blog.csdn.net/zhangjun2915/article/details/40598151
+
