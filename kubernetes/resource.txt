@@ -8,3 +8,8 @@ http://blog.csdn.net/yeasy/article/details/46443933
 3. kubernetes对象创建流程
 http://blog.csdn.net/zhangjun2915/article/details/40598151
 
+4. kubernetes书、介绍了各种对象
+https://www.zybuluo.com/dujun/note/60224
+
+
+
