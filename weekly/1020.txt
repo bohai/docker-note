@@ -1,0 +1,63 @@
+1. Docker1.9发布  
+Docker1.9发布，swarm和多主机网路终于production ready了。  
+https://blog.docker.com/2015/11/docker-1-9-production-ready-swarm-multi-host-networking/
+
+2. Docker收购Tutum，进一步完善其生态布局  
+“Docker今天宣布正在收购Tutum。Tutum是一个专注于Docker容器部署和管理的云服务，并可以支持云上或者本地部署的任何环境。”  
+http://dockone.io/article/757
+
+
+4. Google的GKE终于GA了  
+“Google云计算近日在其博客中发表声明，旗下Google容器引擎（GKE）正式可用。Google声称GTK可以用于生产环境的使用，且承诺SLA运行时间为99.5%。”
+GKE基于google的kubernetes开源项目。  
+http://www.infoq.com/cn/news/2015/10/google-container-engine-ga
+
+5. Rackspace发布了容器服务Carina  
+“在东京举行的OpenStack峰会上，Rackspace公司推出基于服务的Carina Containers，这让Docker containers 和 OpenStack云联系越来越紧密。Rackspace公司在峰会上宣布Carina服务并详细介绍了该服务如何帮助用户在云端迅速构建和部署的Docker容器。”
+
+与Google、亚马逊不同，Rackspace的容器服务直接跑在物理机上，从而可以提供更好的性能。
+集群管理则采用swarm进行管理，对上提供Docker API。支持使用compose这样的Docker编排工具。
+Carina的负责人也是当前magnum的PTL。
+http://www.eweek.com/cloud/rackspace-debuts-containers-as-a-service-on-openstack.html
+
+5. DockerHub宣布停止对Registry V1的支持
+很快1.6之前的版本就无法从Docker Hub上上传下载任何镜像了。
+这样看来，如果用户想要屏蔽这样的变动，最好的方式是有自己的私有仓库。
+免得这样的消息来临时，手忙脚乱。
+http://dockone.io/article/766
+
+6. 甲骨文推出可作为Docker实例的OpenStack新版本
+Openstack的组件实际上已经有很好的符合微服务理念。
+采用Docker方式管理部署不失为一个好的探索。目前Kolla也在做相同的事情。
+http://weibo.com/p/1001603902073656714169
+
+7.Apache Mesos与Google Kubernetes的不同之处在哪里？
+“假如你已经有了特殊的环境（Spark、Hadoop、Kafka等等），Mesos将给你一个框架，让你插入这些系统到你的集群里，并且可以混合运行一些Kubernetes程序。Mesos给你提供了一个安全阀，在你需要这些计算能力但社区还没有提供实现的情况下可以实现支持。
+
+假如你来自虚拟机的世界，或者传统的服务器架构，Kubernetes将是很好的选则。Mesos需要一个自定义的"Framework"来支持例如运行 MariaDB，但是Kubernetes的容器化应用却可以直接运行，并不需要任何修改。这是一个进入可扩展容器集群的最佳办法。
+”
+http://dockone.io/article/760
+
+8.2015Docker生态报告 
+2015年5月，O'Reilly Media和Ruxit针对这些问题，面向O'Reilly社区的用户，共同发起了一项调查。
+*45%以上的调查对象选择的基础设施是AWS EC2，45%左右选择Ubuntu；
+* 未来的6-12个月里，53%的调查对象计划在生产环境中采用Container；
+http://dockone.io/article/779
+
+
+附赠三个：
+1. 2012的harbour项目
+2012的harbour项目，目前已经在github开源。
+结构有点类似于flocker，主要为docker提供网络能力。
+https://github.com/huawei-openlab/harbour
+
+1. 阿里云携手华大基因、英特尔搭建亚太首个精准医疗开放云平台
+
+华大是一家位于深圳的基因测序业的领军企业。基因测序涉及大量数据，大量计算的应用。
+大数据才是云计算上的杀手应用，和这样的企业合作，标杆意义巨大。
+http://www.knowgene.com/article/1006
+
+3. 微软财报超预期背后，云计算正成为硅谷巨头复苏的推手
+“微软财报显示，Azure云营收翻番，企业云产品客户翻番，老对手亚马逊第三季度云计算业务，同比增长了78%。国内巨头阿里云，第二季度云计算业务营收增长106%。”
+目前公有云发展势头很猛。
+http://www.tmtpost.com/1449205.html
