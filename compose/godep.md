@@ -19,7 +19,7 @@ http://docs.coding.io/languages/go/
 <pre><code>godep go build
 </code></pre>
 * 更新godep目录下的库
-<pre><code>godep restore  //如果GOPATH下没有项目Godep中的库
-godep get 要更新的库      //git clone 也许也可以？
-godep update 要更新的库   //
+<pre><code>godep restore  //如果GOPATH下没有项目Godep中的库；需要在项目目录下执行
+godep get 要更新的库      //git clone 也可以，golang的库由于墙的原因可能更新失败，可以从github获取https://github.com/golang
+godep update 要更新的库   //需要在项目目录下执行
 </code></pre>
