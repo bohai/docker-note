@@ -14,3 +14,12 @@ go get github.com/tools/godep
 </code></pre>
 
 http://docs.coding.io/languages/go/
+### 使用
+* 编译
+<pre><code>godep go build
+</code></pre>
+* 更新godep目录下的库
+<pre><code>godep restore  //如果GOPATH下没有项目Godep中的库
+godep get 要更新的库      //git clone 也许也可以？
+godep update 要更新的库   //
+</code></pre>
