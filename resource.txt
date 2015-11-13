@@ -1,2 +1,7 @@
 1. Docker源码分析  
 http://www.sel.zju.edu.cn/?p=112
+2. magnum L版
+http://www.sdnlab.com/14699.html
+3. libcontainer深度解析
+http://www.infoq.com/cn/articles/docker-container-management-libcontainer-depth-analysis?utm_campaign=rightbar_v2&utm_source=infoq&utm_medium=articles_link&utm_content=link_text
+4. 
