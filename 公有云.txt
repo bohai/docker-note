@@ -1,0 +1,7 @@
+1. AWS AUP
+https://aws.amazon.com/cn/aup/
+
+2. AWS security
+http://support.panopto.com/documentation/admin-and-setup/how-panopto-works/panopto-hosted/amazon-ec2-security-0
+
+3. 
