@@ -297,6 +297,54 @@ docker daemon---->libnetwork----->network plugin
 #### CNM介绍  
 https://github.com/docker/libnetwork/blob/master/docs/design.md
 #### 代码分析  
-  
+#####Docker daemon
+* 在daemon初始化时创建了三个网络
+daemon.go  函数NewDaemon：
+<pre><code>func NewDaemon(config *Config, registryService *registry.Service) (daemon *Daemon, err error) {
+...
+d.netController, err = d.initNetworkController(config)
+	if err != nil {
+		return nil, fmt.Errorf("Error initializing network controller: %v", err)
+	}
+...
+}
+</code></pre>
+initNetworkController函数在daemon_unix.go/daemon_windows.go中，以unix为例：
+主要做了以下几件事情：
+初始化controller, 初始化null/host/bridge三个内置网络。
+<pre><code>
+func (daemon *Daemon) initNetworkController(config *Config) (libnetwork.NetworkController, error) {
+	netOptions, err := daemon.networkOptions(config)
+	if err != nil {
+		return nil, err
+	}
+
+	controller, err := libnetwork.New(netOptions...)
+	if err != nil {
+		return nil, fmt.Errorf("error obtaining controller instance: %v", err)
+	}
+
+	// Initialize default network on "null"
+	if _, err := controller.NewNetwork("null", "none", libnetwork.NetworkOptionPersist(false)); err != nil {
+		return nil, fmt.Errorf("Error creating default \"null\" network: %v", err)
+	}
+
+	// Initialize default network on "host"
+	if _, err := controller.NewNetwork("host", "host", libnetwork.NetworkOptionPersist(false)); err != nil {
+		return nil, fmt.Errorf("Error creating default \"host\" network: %v", err)
+	}
+
+	if !config.DisableBridge {
+		// Initialize default driver "bridge"
+		if err := initBridgeDriver(controller, config); err != nil {
+			return nil, err
+		}
+	}
+
+	return controller, nil
+}
+</code></pre>
+#####libnetwork
+
 
 
