@@ -345,6 +345,48 @@ func (daemon *Daemon) initNetworkController(config *Config) (libnetwork.NetworkC
 	return controller, nil
 }
 </code></pre>
+* 启动容器时创建网络
+<pre><code>
+api/server/router/container/container.go
+local.NewPostRoute("/containers/{name:.*}/start", r.postContainersStart),
+postContainersStart中调用了containerStart函数
+daemon/start.go
+func (daemon *Daemon) containerStart(container *Container) (err error) {
+	...
+	if err := daemon.initializeNetworking(container); err != nil {
+		return err
+	}
+        ...
+}
+daemon/container_unix.go
+func (daemon *Daemon) initializeNetworking(container *Container) error {
+...
+	if err := daemon.allocateNetwork(container); err != nil {
+		return err
+	}
+...
+}
+func (daemon *Daemon) allocateNetwork(container *Container) error {
+...
+	for n := range container.NetworkSettings.Networks {
+		if err := daemon.connectToNetwork(container, n, updateSettings); err != nil {
+			return err
+		}
+	}
+...
+}
+func (daemon *Daemon) connectToNetwork(container *Container, idOrName string, updateSettings bool) (err error) {
+...
+ep, err = n.CreateEndpoint(endpointName, createOptions...)
+...
+sb := daemon.getNetworkSandbox(container)
+...
+	if err := ep.Join(sb); err != nil {
+		return err
+	}
+...
+}
+
 #####libnetwork
 
 
