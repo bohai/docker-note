@@ -309,7 +309,8 @@ d.netController, err = d.initNetworkController(config)
 ...
 }
 </code></pre>
-initNetworkController函数在daemon_unix.go/daemon_windows.go中，以unix为例：
+
+* initNetworkController函数在daemon_unix.go/daemon_windows.go中，以unix为例：
 主要做了以下几件事情：
 初始化controller, 初始化null/host/bridge三个内置网络。
 <pre><code>
