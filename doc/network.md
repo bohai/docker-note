@@ -377,17 +377,173 @@ func (daemon *Daemon) allocateNetwork(container *Container) error {
 }
 func (daemon *Daemon) connectToNetwork(container *Container, idOrName string, updateSettings bool) (err error) {
 ...
+// 创建endpoint
 ep, err = n.CreateEndpoint(endpointName, createOptions...)
 ...
+// 获得sandbox
 sb := daemon.getNetworkSandbox(container)
 ...
+// 接入sandbox
 	if err := ep.Join(sb); err != nil {
 		return err
 	}
 ...
 }
+</code></pre>
 
-#####libnetwork
+* 创建Network  
+实际上是调用libnetwork的NewNetwork接口。
+network的所有API，都会被路由到daemon/network.go中的函数上
+<pre><code>
+daemon/network.go
+// CreateNetwork creates a network with the given name, driver and other optional parameters
+func (daemon *Daemon) CreateNetwork(name, driver string, ipam network.IPAM, options map[string]string) (libnetwork.Network, error) {
+	c := daemon.netController
+	if driver == "" {
+		driver = c.Config().Daemon.DefaultDriver
+	}
 
+	nwOptions := []libnetwork.NetworkOption{}
 
+	v4Conf, v6Conf, err := getIpamConfig(ipam.Config)
+	if err != nil {
+		return nil, err
+	}
+
+	nwOptions = append(nwOptions, libnetwork.NetworkOptionIpam(ipam.Driver, "", v4Conf, v6Conf))
+	nwOptions = append(nwOptions, libnetwork.NetworkOptionDriverOpts(options))
+	return c.NewNetwork(driver, name, nwOptions...)
+}
+</code></pre>
+* Connect容器到Network
+我们再看看connect容器到Network。
+可以看到最后也是调用了libnetwork的接口。
+创建EP，加入sandbox。
+<pre><code>
+// ConnectContainerToNetwork connects the given container to the given
+// network. If either cannot be found, an err is returned. If the
+// network cannot be set up, an err is returned.
+func (daemon *Daemon) ConnectContainerToNetwork(containerName, networkName string) error {
+	container, err := daemon.Get(containerName)
+	if err != nil {
+		return err
+	}
+	return daemon.ConnectToNetwork(container, networkName)
+}
+// ConnectToNetwork connects a container to a network
+func (daemon *Daemon) ConnectToNetwork(container *Container, idOrName string) error {
+	if !container.Running {
+		return derr.ErrorCodeNotRunning.WithArgs(container.ID)
+	}
+	if err := daemon.connectToNetwork(container, idOrName, true); err != nil {
+		return err
+	}
+	if err := container.toDiskLocking(); err != nil {
+		return fmt.Errorf("Error saving container to disk: %v", err)
+	}
+	return nil
+}
+
+func (daemon *Daemon) connectToNetwork(container *Container, idOrName string, updateSettings bool) (err error) {
+	if container.hostConfig.NetworkMode.IsContainer() {
+		return runconfig.ErrConflictSharedNetwork
+	}
+
+	if runconfig.NetworkMode(idOrName).IsBridge() &&
+		daemon.configStore.DisableBridge {
+		container.Config.NetworkDisabled = true
+		return nil
+	}
+
+	controller := daemon.netController
+
+	n, err := daemon.FindNetwork(idOrName)
+	if err != nil {
+		return err
+	}
+
+	if updateSettings {
+		if err := daemon.updateNetworkSettings(container, n); err != nil {
+			return err
+		}
+	}
+
+	ep, err := container.getEndpointInNetwork(n)
+	if err == nil {
+		return fmt.Errorf("container already connected to network %s", idOrName)
+	}
+
+	if _, ok := err.(libnetwork.ErrNoSuchEndpoint); !ok {
+		return err
+	}
+
+	createOptions, err := container.buildCreateEndpointOptions(n)
+	if err != nil {
+		return err
+	}
+
+	endpointName := strings.TrimPrefix(container.Name, "/")
+	ep, err = n.CreateEndpoint(endpointName, createOptions...)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if err != nil {
+			if e := ep.Delete(); e != nil {
+				logrus.Warnf("Could not rollback container connection to network %s", idOrName)
+			}
+		}
+	}()
+
+	if err := daemon.updateEndpointNetworkSettings(container, n, ep); err != nil {
+		return err
+	}
+
+	sb := daemon.getNetworkSandbox(container)
+	if sb == nil {
+		options, err := daemon.buildSandboxOptions(container, n)
+		if err != nil {
+			return err
+		}
+		sb, err = controller.NewSandbox(container.ID, options...)
+		if err != nil {
+			return err
+		}
+
+		container.updateSandboxNetworkSettings(sb)
+	}
+
+	if err := ep.Join(sb); err != nil {
+		return err
+	}
+
+	if err := container.updateJoinInfo(n, ep); err != nil {
+		return derr.ErrorCodeJoinInfo.WithArgs(err)
+	}
+
+	return nil
+}
+</code></pre>
+其他功能和上述分析类似。
+##### libnetwork 
+Libnetwork代码中内置了若干个driver,分别是（bridge,null,host,overlay,remote,windows)，其中bridge,null,host是常用的local driver。
+overlay是docker新发布的multi-host network方案。remote则可以与第三方定制的driver plugin通信。   
+参考libnetwork/dirvers/remote/driver.go的函数，最后是发送rest消息与plugin通信。  
+<pre><code>...
+func (d *driver) CreateNetwork(id string, options map[string]interface{}, ipV4Data, ipV6Data []driverapi.IPAMData) error {
+	create := &api.CreateNetworkRequest{
+		NetworkID: id,
+		Options:   options,
+		IPv4Data:  ipV4Data,
+		IPv6Data:  ipV6Data,
+	}
+	return d.call("CreateNetwork", create, &api.CreateNetworkResponse{})
+}
+
+func (d *driver) DeleteNetwork(nid string) error {
+	delete := &api.DeleteNetworkRequest{NetworkID: nid}
+	return d.call("DeleteNetwork", delete, &api.DeleteNetworkResponse{})
+}
+...
+</code></pre>
 
