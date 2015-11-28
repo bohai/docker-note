@@ -308,13 +308,13 @@ endpoint将一个sandbox与一个网络连通。
 通常可以使用linux bridge的veth pair或者ovs的internal port等技术。  
 
 #####CNM的主要对象有
-* NetworkController 
-主要负责管理driver，提供创建network接口。
-* Driver 
-提供network/sandbox/endpoint的实现。
-* Network 
-* Endpoint 
-* Sandbox 
+* NetworkController   
+主要负责管理driver，提供创建network接口。   
+* Driver   
+提供network/sandbox/endpoint的实现。   
+* Network   
+* Endpoint    
+* Sandbox   
 
 #### 代码分析  
 #####Docker daemon
