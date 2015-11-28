@@ -296,6 +296,26 @@ https://github.com/docker/libnetwork/blob/master/docs/remote.md
 docker daemon---->libnetwork----->network plugin   
 #### CNM介绍  
 https://github.com/docker/libnetwork/blob/master/docs/design.md
+CNM全称Container Network Model。主要对libnetwork的网络模型进行了定义。  
+#####主要有三个概念：  
+* network
+一组可以直接互相通信的endpoint构成。通常的实现手段linux bridge/ovs等。
+* sandbox
+sandbox包含了一个容器的网络栈。一般包含interface/route/dns设置等。一般通过namespace实现。 
+一个sandbox可以包含多个属于不同network的endpoint。
+* endpoint  
+endpoint将一个sandbox与一个网络连通。  
+通常可以使用linux bridge的veth pair或者ovs的internal port等技术。  
+
+#####CNM的主要对象有
+* NetworkController 
+主要负责管理driver，提供创建network接口。
+* Driver 
+提供network/sandbox/endpoint的实现。
+* Network 
+* Endpoint 
+* Sandbox 
+
 #### 代码分析  
 #####Docker daemon
 * 在daemon初始化时创建了三个网络
@@ -526,9 +546,9 @@ func (daemon *Daemon) connectToNetwork(container *Container, idOrName string, up
 
 其他功能和上述分析类似。
 ##### libnetwork 
-Libnetwork代码中内置了若干个driver,分别是（bridge,null,host,overlay,remote,windows)，其中bridge,null,host是常用的local driver。
-overlay是docker新发布的multi-host network方案。remote则可以与第三方定制的driver plugin通信。   
-参考libnetwork/dirvers/remote/driver.go的函数，最后是发送rest消息与plugin通信。  
+Libnetwork代码中内置了若干个driver,分别是（bridge,null,host,overlay,remote,windows)，其中bridge,null,host是常用的local driver。    
+overlay是docker新发布的multi-host network方案。remote则可以与第三方定制的driver plugin通信。     
+参考libnetwork/dirvers/remote/driver.go的函数，最后是发送rest消息与plugin通信。    
 <pre><code>...
 func (d *driver) CreateNetwork(id string, options map[string]interface{}, ipV4Data, ipV6Data []driverapi.IPAMData) error {
 	create := &api.CreateNetworkRequest{
