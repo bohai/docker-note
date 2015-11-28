@@ -415,10 +415,10 @@ func (daemon *Daemon) CreateNetwork(name, driver string, ipam network.IPAM, opti
 	return c.NewNetwork(driver, name, nwOptions...)
 }
 </code></pre>
-* Connect容器到Network
-我们再看看connect容器到Network。
-可以看到最后也是调用了libnetwork的接口。
-创建EP，加入sandbox。
+* Connect容器到Network  
+我们再看看connect容器到Network。  
+可以看到最后也是调用了libnetwork的接口。  
+创建EP，加入sandbox。  
 <pre><code>
 // ConnectContainerToNetwork connects the given container to the given
 // network. If either cannot be found, an err is returned. If the
@@ -443,7 +443,6 @@ func (daemon *Daemon) ConnectToNetwork(container *Container, idOrName string) er
 	}
 	return nil
 }
-
 func (daemon *Daemon) connectToNetwork(container *Container, idOrName string, updateSettings bool) (err error) {
 	if container.hostConfig.NetworkMode.IsContainer() {
 		return runconfig.ErrConflictSharedNetwork
@@ -524,6 +523,7 @@ func (daemon *Daemon) connectToNetwork(container *Container, idOrName string, up
 	return nil
 }
 </code></pre>
+
 其他功能和上述分析类似。
 ##### libnetwork 
 Libnetwork代码中内置了若干个driver,分别是（bridge,null,host,overlay,remote,windows)，其中bridge,null,host是常用的local driver。
