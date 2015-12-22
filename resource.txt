@@ -6,3 +6,5 @@ http://www.sdnlab.com/14699.html
 http://www.infoq.com/cn/articles/docker-container-management-libcontainer-depth-analysis?utm_campaign=rightbar_v2&utm_source=infoq&utm_medium=articles_link&utm_content=link_text
 4. 技术电子书
 https://www.gitbook.com/explore?page=1
+5. 桌面云
+https://cloud-szxbzg1.huaweiobz.com
