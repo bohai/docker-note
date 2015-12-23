@@ -1,6 +1,10 @@
 1. cpu_quota支持
+https://github.com/docker/compose/commit/a5420412646d5d8912949d2b114f364162fd2cd1
 2. no_zero return when nothing is done
-3. network_driver支持
+https://github.com/docker/compose/commit/bc843d67588c6305b82cd2eb7c057cfdef02a4eb
+3. network_driver支持.
+https://github.com/docker/compose/pull/2536
 4. validate命令
-5. network_driver
-6. human_readable
+https://github.com/docker/compose/issues/1953
+5. human_readable
+https://github.com/docker/compose/commit/c8f266b637c1ec8c8a017d18d4f2bf4339055ae0
