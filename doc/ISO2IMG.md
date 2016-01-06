@@ -52,5 +52,10 @@ elements比较像程序中的接口/插件机制，将element中规定目录下�
 我也搜索了下，windows镜像自动制作也是可能的，但是并不清楚，目前为什么没有集成进去。可能是创建过程差异略大。Windows镜像的创建，
 一般需要创建虚拟机，通过应答文件完成OS的自动安装。应答文件一般放在软盘中，需要创建一个虚拟软盘文件。   
 
+参考：   
+http://www.networknet.nl/apps/wp/archives/1402  
+http://wenku.baidu.com/view/96af8d6427d3240c8447efd9.html  
+https://cloudbase.it/create-windows-openstack-images/  
+https://github.com/cloudbase/windows-openstack-imaging-tools/blob/master/README.md  
 
 
