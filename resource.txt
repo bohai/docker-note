@@ -8,3 +8,6 @@ http://www.infoq.com/cn/articles/docker-container-management-libcontainer-depth-
 https://www.gitbook.com/explore?page=1
 5. 桌面云
 https://cloud-szxbzg1.huaweiobz.com
+
+6. AWS比价网站  
+http://ec2pricing.net/
