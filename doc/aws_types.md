@@ -51,7 +51,11 @@ T2本来的定位就是CPU使用率低，偶尔高峰，成本最低的实例类
 这里可以看到一个有趣的事情，G2服务器有2个CPU，每个20核。而[Amazon EC2实例规格](https://aws.amazon.com/cn/ec2/instance-types/?nc1=h_ls)中写了G2使用Intel Xeon E5-2670 (Sandy Bridge) CPU，从Intel资料可以看到，该CPU只有8核16个超线程，而G2最大规格的实例是32U。两相印证，这里应该是亚马逊的笔误。   
 
 ## 分析
-### 
+### C4类型  
+
+### T2类型  
+T2类型因为CPU型号，超分的影响，比较难以估计硬件规格。这里不做分析。  
+
 ## 结论
 
 
