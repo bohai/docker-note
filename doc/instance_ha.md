@@ -21,4 +21,7 @@ GCE主要对两类事件进行处理：
 
 对维护事件，默认会进行热迁移，用户也可以选择处理是关闭。  
 对虚拟机异常crash、或者google engine关闭虚拟机（非用户进行的关闭），默认处理为restart。用户也可以选择为不处理。  
-
+参考： 
+https://cloud.google.com/compute/docs/reference/latest/instances/setScheduling   
+https://cloud.google.com/compute/docs/instances/setting-instance-scheduling-options   
+https://cloud.google.com/compute/docs/tutorials/robustsystems
