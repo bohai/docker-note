@@ -18,6 +18,7 @@ GCE主要对两类事件进行处理：
 + automaticRestart（主要是虚拟机异常crash或者Google Engine关闭）    
   +  true（默认）
   +  false   
+
 对维护事件，默认会进行热迁移，用户也可以选择处理是关闭。  
 对虚拟机异常crash、或者google engine关闭虚拟机（非用户进行的关闭），默认处理为restart。用户也可以选择为不处理。  
 
