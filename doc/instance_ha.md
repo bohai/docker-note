@@ -9,13 +9,6 @@
 -----
 # 公有云上虚拟机故障恢复
 ## AWS  
-在亚马逊，可以创建 Amazon CloudWatch 警报用于监控 Amazon EC2 实例，并且在实例受损（由于发生底层硬件故障或需要 AWS 参与才能修复的问题）时自动恢复实例。
-导致系统状态检查出现故障（StatusCheckFailed_System警报）的问题示例包括：
-+ 网络连接丢失  
-+ 系统电源损耗  
-+ 物理主机上的软件问题  
-+ 物理主机上的硬件问题  
-
 >"状态检查的类型
 
 >状态检查可分为两种类型：系统状态检查和实例状态检查。
@@ -42,6 +35,8 @@
 文件系统损坏  
 内核不兼容  
 "
+
+参考亚马逊文档（https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/monitoring-system-instance-status-check.html）。
 
 针对该StatusCheckFailed_System故障警报，用户可以在设置自动恢复操作。 
 这种故障处理不能对本地存储实例、和GPU实例（I、D、G类型）使用。
