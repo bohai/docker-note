@@ -17,7 +17,7 @@ HVX是Revllo的一整套方案（基于高性能嵌套虚拟化/SDN/存储overla
 
 ![hvx architecture](https://www.ravellosystems.com/sites/all/themes/ravello/images/new-images/technology/overview.png)
 
-HVX目前的主要面对场景是：
+HVX目前的主要面对场景是：  
 1. 开发/测试场景  
 2. 教育培训  
 3. openstack实验环境  
