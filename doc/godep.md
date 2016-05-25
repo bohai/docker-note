@@ -11,4 +11,4 @@ git commit -m "vendoring dependency"
 godep restore
 
 ### update dependency
-godep update <dependency>
+godep update dependency
