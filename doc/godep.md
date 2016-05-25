@@ -9,3 +9,6 @@ git commit -m "vendoring dependency"
 
 ### load the dependency
 godep restore
+
+### update dependency
+godep update <dependency>
