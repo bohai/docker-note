@@ -50,5 +50,6 @@ client的请求会被负载均衡到各个可用的web服务上。
 本文中使用docker-machine0.8.0-rc1 ，docker1.12.0-rc3.
 “smakam/myubuntu” 容器使用的是ubuntu系统，加下一些比如curl的工具来展示负载均衡。   
 
-
-
+### 使用Swarm进行部署
+### 使用SwarmNext进行部署
+### 使用SwarmKit进行部署
