@@ -111,9 +111,9 @@ root@abb7ec6c67fc:/# curl -i vote  | grep "container ID"
 
 ### 使用SwarmNext进行部署
 步骤如下：  
-1. 使用docker machine和1.12 RC3的docker创建两个docker实例。其中一个作为master节点，另外一个作为worker节点。
-2. 创建overlay网络。
-3. 基于overlay网络创建2个副本的web投票服务，1个副本的client服务。
++ 使用docker machine和1.12 RC3的docker创建两个docker实例。其中一个作为master节点，另外一个作为worker节点。
++ 创建overlay网络。
++ 基于overlay网络创建2个副本的web投票服务，1个副本的client服务。
 
 创建两个docker实例：
 ```shell
@@ -175,5 +175,10 @@ af6lg0cq66bl  vote    2/2       instavote/vote
 ### 使用SwarmKit进行部署
 步骤：  
 + 使用docker-machine创建2node的cluster。Swarm集群虽然可以不适用KV存储。但是overlay网络需要KV存储。所以例子中我会使用KV存储。   
-+ fdafs
++ 构建swarmkit并把二进制部署到swarm节点。  
++ 创建2个node的swarm集群。  
++ 创建overlay网络以及创建基于overlay网络的服务。  
+
+
+
 
