@@ -258,3 +258,10 @@ ID                         Name      Membership  Status   Availability  Manager 
 
 
 ### 总结
+SwarmNext（docker的swarm mode）相对于之前的swarm是一个重大的改进。将服务对象引入docker中，可以很容易的实现诸如
+scaling、rolling update、service discovery、load balance、routing mesh的特性。  
+这样swarm可以在特性上更接近于kubernetes。  
+在1.12release中，docker支持SwarmNext和Swarm，之前将swarm用于生产环境的用户，可以进行升级。  
+SwarmNext目前还不能与compose、stoarge插件很好的集成，但是应该会在之后的版本增加这些能力。  
+从长期来说，swarm会被废弃，SwarmNext会成为docker的唯一编排方式。  
+将Swarmkit开源，有利于swarmkit的独立开发，以及第三方基于swarmkit开发分布式应用的编排系统。
