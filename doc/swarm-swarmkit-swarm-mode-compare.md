@@ -91,6 +91,13 @@ eval $(docker-machine env --swarm mhs-demo0)
 docker network create --driver overlay overlay1   
 ```
 
+创建服务：  
+两个投票服务的容器，都是用相同网络别名“vote"，从而可以被作为一个服务来访问。  
+```shell 
+docker run -d --name=vote1 --net=overlay1 --net-alias=vote instavote/vote
+docker run -d --name=vote2 --net=overlay1 --net-alias=vote instavote/vote
+docker run -ti --name client --net=overlay1 smakam/myubuntu:v4 bash
+```
 
 
 ### 使用SwarmNext进行部署
