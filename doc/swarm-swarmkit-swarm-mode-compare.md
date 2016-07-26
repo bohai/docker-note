@@ -56,17 +56,19 @@ client的请求会被负载均衡到各个可用的web服务上。
 + 创建使用consul存储的docker实例。这里使用docker-machine创建。  
 + 创建overlay网络。  
 + 创建投票web系统的多实例以及client单实例。所有的web服务需要使用相同的网络别名，以便可以进行流量的负载均衡。  
+
 创建KV存储：  
-''''     
+```shell     
 docker-machine create -d virtualbox mh-keystore  
 eval "$(docker-machine env mh-keystore)"  
 docker run -d \  
     -p "8500:8500" \  
     -h "consul" \  
     progrium/consul -server -bootstrap  
-''''
-创建使用KV存储的Docker swarm 实例：  
-''''   
+```  
+
+创建使用KV存储的Docker swarm 实例：    
+```shell   
 docker-machine create \  
 -d virtualbox \  
 --swarm --swarm-master \   
@@ -81,12 +83,13 @@ docker-machine create -d virtualbox \
     --engine-opt="cluster-store=consul://$(docker-machine ip mh-keystore):8500" \  
     --engine-opt="cluster-advertise=eth1:2376" \  
   mhs-demo1  
-''''
-创建overlay网络：
-''''   
+```  
+
+创建overlay网络：   
+```shell
 eval $(docker-machine env --swarm mhs-demo0)  
 docker network create --driver overlay overlay1   
-''''
+```
 
 
 
