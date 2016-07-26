@@ -42,8 +42,13 @@ Use swarmctl CLI|Use regular Docker CLI
 ### Sample Application   
 下边是一个非常简单的应用。该应用时一个高可用的web投票服务，可以通过client访问。       
 client的请求会被负载均衡到各个可用的web服务上。     
+应用使用overlay网络，我们将使用Swarm、SwarmNext、SwarmKit进行部署。
 
 ![vote_web_system](https://sreeninet.files.wordpress.com/2016/07/swarm1.png?w=301&h=162)
+
+#### 前提
+本文中使用docker-machine0.8.0-rc1 ，docker1.12.0-rc3.
+“smakam/myubuntu” 容器使用的是ubuntu系统，加下一些比如curl的工具来展示负载均衡。   
 
 
 
