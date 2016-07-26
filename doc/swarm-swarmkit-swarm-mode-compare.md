@@ -110,6 +110,68 @@ root@abb7ec6c67fc:/# curl -i vote  | grep "container ID"
 从上边可以看到，请求被均衡到了两个vote web服务。
 
 ### 使用SwarmNext进行部署
+步骤如下：  
+1. 使用docker machine和1.12 RC3的docker创建两个docker实例。其中一个作为master节点，另外一个作为worker节点。
+2. 创建overlay网络。
+3. 基于overlay网络创建2个副本的web投票服务，1个副本的client服务。
+
+创建两个docker实例：
+```shell
+docker-machine create -d virtualbox node1
+docker-machine create -d virtualbox node2
+```
+
+设置node1为master节点： 
+```shell
+docker swarm init --listen-addr 192.168.99.100:2377
+```
+node1同时作为woker节点运行。   
+
+设置node2为worker节点：  
+```shell  
+docker swarm join 192.168.99.100:2377
+```
+
+查看云运行的nodes：
+```shell
+$ docker node ls
+ID                           HOSTNAME  MEMBERSHIP  STATUS  AVAILABILITY  MANAGER STATUS
+b7jhf7zddv2w2evze1bz44ukx *  node1     Accepted    Ready   Active        Leader
+ca4jgzcnyz70ry4h5enh701fv    node2     Accepted    Ready   Active    
+```
+
+创建overlay网络：  
+```shell 
+docker network create --driver overlay overlay1
+```
+
+创建服务：
+```shell
+docker service create --replicas 1 --name client --network overlay1 smakam/myubuntu:v4 ping docker.com
+docker service create --name vote --network overlay1 --replicas 2 -p 8080:80 instavote/vote
+```
+
+在这个例子中，本不需要把port映射到host上，但是我还是使用了。  
+使用docker1.12的routing mesh特性，将8080端口映射到了node1和node2上。
+
+查看运行的服务：
+```shell
+$ docker service ls
+ID            NAME    REPLICAS  IMAGE               COMMAND
+2rm1svgfxzzw  client  1/1       smakam/myubuntu:v4  ping docker.com
+af6lg0cq66bl  vote    2/2       instavote/vote 
+```
+
+从client容器连接web投票系统：
+```shell
+# curl vote | grep "container ID"
+          Processed by container ID c831f88b217f
+# curl vote | grep "container ID"
+          Processed by container ID fe4cc375291b
+```
+
+同样我们看到，client的请求被均衡到了两个web服务容器。   
+
 ### 使用SwarmKit进行部署
 步骤：  
 + 使用docker-machine创建2node的cluster。Swarm集群虽然可以不适用KV存储。但是overlay网络需要KV存储。所以例子中我会使用KV存储。   
