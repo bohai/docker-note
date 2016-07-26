@@ -99,6 +99,15 @@ docker run -d --name=vote2 --net=overlay1 --net-alias=vote instavote/vote
 docker run -ti --name client --net=overlay1 smakam/myubuntu:v4 bash
 ```
 
+从client容器中访问vote web服务：
+```shell 
+root@abb7ec6c67fc:/# curl vote  | grep "container ID"
+          Processed by container ID a9c05cd4ee15
+root@abb7ec6c67fc:/# curl -i vote  | grep "container ID"
+          Processed by container ID ce94f38fc958
+```
+
+从上边可以看到，请求被均衡到了两个vote web服务。
 
 ### 使用SwarmNext进行部署
 ### 使用SwarmKit进行部署
