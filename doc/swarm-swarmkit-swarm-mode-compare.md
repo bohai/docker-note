@@ -179,6 +179,82 @@ af6lg0cq66bl  vote    2/2       instavote/vote
 + 创建2个node的swarm集群。  
 + 创建overlay网络以及创建基于overlay网络的服务。  
 
+构建swarmkit：  
+这里在Go container中进行swarmkit的编译。  
+```shell
+git clone https://github.com/docker/swarmkit.git
+eval $(docker-machine env swarm-01)
+docker run -it --name swarmkitbuilder -v `pwd`/swarmkit:/go/src/github.com/docker/swarmkit golang:1.6 bash
+cd /go/src/github.com/docker/swarmkit
+make binaries
+```
+
+创建基于KV存储的Docker实例：
+```shell
+docker-machine create \
+-d virtualbox \
+--engine-opt="cluster-store=consul://$(docker-machine ip mh-keystore):8500" \
+--engine-opt="cluster-advertise=eth1:2376" \
+swarm-01
+docker-machine create -d virtualbox \
+--engine-opt="cluster-store=consul://$(docker-machine ip mh-keystore):8500" \
+--engine-opt="cluster-advertise=eth1:2376" \
+swarm-02
+```
+
+拷贝swarmkit到node中：
+```shell
+docker-machine scp bin/swarmd swarm-01:/tmp
+docker-machine scp bin/swarmctl swarm-01:/tmp
+docker-machine ssh swarm-01 sudo cp /tmp/swarmd /tmp/swarmctl /usr/local/bin/
+docker-machine scp bin/swarmd swarm-02:/tmp
+docker-machine scp bin/swarmctl swarm-02:/tmp
+docker-machine ssh swarm-02 sudo cp /tmp/swarmd /tmp/swarmctl /usr/local/bin/
+```
+
+创建swarm cluster：
+```shell
+Master:
+docker-machine ssh swarm-01
+swarmd -d /tmp/swarm-01 \
+--listen-control-api /tmp/swarm-01/swarm.sock \
+--listen-remote-api 192.168.99.101:4242 \
+--hostname swarm-01 &
+
+Worker:
+swarmd -d /tmp/swarm-02 \
+--hostname swarm-02 \
+--listen-remote-api 192.168.99.102:4242 \
+--join-addr 192.168.99.101:4242 &
+```
+
+创建overlay网络和服务：
+```shell
+swarmctl network create --driver overlay --name overlay1
+swarmctl service create --name vote --network overlay1 --replicas 2 --image instavote/vote
+swarmctl service create --name client --network overlay1 --image smakam/myubuntu:v4 --command ping,docker.com
+```
+
+查看2node cluster：
+```shell
+export SWARM_SOCKET=/tmp/swarm-01/swarm.sock
+swarmctl node ls
+
+ID                         Name      Membership  Status   Availability  Manager Status
+--                         ----      ----------  ------   ------------  --------------
+5uh132h0acqebetsom1z1nntm  swarm-01  ACCEPTED    READY    ACTIVE        REACHABLE *
+5z8z6gq36maryzrsy0cmk7f51            ACCEPTED    UNKNOWN  ACTIVE  
+```
+
+通过client容器连接web投票系统：  
+```shell
+# curl 10.0.0.3   | grep "container ID"
+          Processed by container ID 78a3e9b06b7f
+# curl 10.0.0.4   | grep "container ID"
+          Processed by container ID 04e02b1731a0
+```
+
+因为swarmkit没有负载均衡、服务发现能力，我们使用容器的IP来进行访问。  
 
 
-
+### 总结
