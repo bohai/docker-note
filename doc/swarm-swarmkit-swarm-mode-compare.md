@@ -30,5 +30,16 @@ Service model not available|Service model is available. This provides features l
 Communication not secure|Both control and data plane is secure
 Integrated with machine and compose|Not yet integrated with machine and compose as of release 1.12. Will be integrated in the upcoming releases
 
+下边是SwarmKit与SwarmNext的对比：  
+
+SwarmKit|SwarmNext
+--------------|---------------------
+Plumbing opensource project|Swarmkit used within SwarmNext and tightly integrated with Docker Engine
+Swarmkit needs to built and run separately|Docker 1.12 comes integrated with SwarmNext
+No service discovery, load balancing and routing mesh|Service discovery, load balancing and routing mesh available
+Use swarmctl CLI|Use regular Docker CLI
+
+
+
 
 
