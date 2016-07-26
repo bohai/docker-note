@@ -39,7 +39,11 @@ Swarmkit needs to built and run separately|Docker 1.12 comes integrated with Swa
 No service discovery, load balancing and routing mesh|Service discovery, load balancing and routing mesh available
 Use swarmctl CLI|Use regular Docker CLI
 
+### Sample Application   
+下边是一个非常简单的应用。该应用时一个高可用的web投票服务，可以通过client访问。       
+client的请求会被负载均衡到各个可用的web服务上。     
 
+![vote_web_system](https://sreeninet.files.wordpress.com/2016/07/swarm1.png?w=301&h=162)
 
 
 
